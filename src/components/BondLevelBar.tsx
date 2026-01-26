@@ -54,10 +54,10 @@ export function BondLevelBar() {
 
   // Determine bond level tier
   const getTier = (level: number) => {
-    if (level >= 90) return { label: 'MAX', color: 'max' };
-    if (level >= 60) return { label: 'HIGH', color: 'high' };
-    if (level >= 30) return { label: 'MID', color: 'mid' };
-    return { label: 'LOW', color: 'low' };
+    if (level >= 90) return { label: '최고', color: 'max' };
+    if (level >= 60) return { label: '높음', color: 'high' };
+    if (level >= 30) return { label: '보통', color: 'mid' };
+    return { label: '낮음', color: 'low' };
   };
 
   const tier = getTier(bondLevel);
@@ -88,7 +88,7 @@ export function BondLevelBar() {
               </motion.div>
             ))}
           </div>
-          <span className="font-pixel text-xs text-gray-800">BOND LV</span>
+          <span className="font-pixel text-xs text-gray-800">친밀도</span>
         </div>
 
         {/* Value display */}

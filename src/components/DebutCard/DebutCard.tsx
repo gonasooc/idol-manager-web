@@ -37,10 +37,10 @@ function getStatBar(value: number, total: number = 100) {
 }
 
 function getTitle(bondLevel: number): string {
-  if (bondLevel >= 90) return 'DEBUT READY!';
-  if (bondLevel >= 70) return 'TRAINEE+';
-  if (bondLevel >= 50) return 'TRAINEE';
-  return 'ROOKIE';
+  if (bondLevel >= 90) return '데뷔 준비 완료!';
+  if (bondLevel >= 70) return '연습생+';
+  if (bondLevel >= 50) return '연습생';
+  return '루키';
 }
 
 export function DebutCard({ idolName, bondLevel, kindness, confidence, persona }: DebutCardProps) {
@@ -105,7 +105,7 @@ export function DebutCard({ idolName, bondLevel, kindness, confidence, persona }
             {/* Bond Level */}
             <div>
               <div className="flex justify-between items-center mb-1">
-                <span className="font-pixel text-xs text-gray-400">&lt;3 BOND</span>
+                <span className="font-pixel text-xs text-gray-400">&lt;3 친밀도</span>
                 <span className="font-pixel text-xs text-retro-pink">{bondLevel}</span>
               </div>
               <div className="font-retro text-lg text-retro-pink tracking-widest">
@@ -116,7 +116,7 @@ export function DebutCard({ idolName, bondLevel, kindness, confidence, persona }
             {/* Kindness */}
             <div>
               <div className="flex justify-between items-center mb-1">
-                <span className="font-pixel text-xs text-gray-400">:) KIND</span>
+                <span className="font-pixel text-xs text-gray-400">:) 상냥함</span>
                 <span className="font-pixel text-xs text-retro-gold">{kindnessDisplay}</span>
               </div>
               <div className="font-retro text-lg text-retro-gold tracking-widest">
@@ -127,7 +127,7 @@ export function DebutCard({ idolName, bondLevel, kindness, confidence, persona }
             {/* Confidence */}
             <div>
               <div className="flex justify-between items-center mb-1">
-                <span className="font-pixel text-xs text-gray-400">!! CONF</span>
+                <span className="font-pixel text-xs text-gray-400">!! 자신감</span>
                 <span className="font-pixel text-xs text-retro-teal">{confidenceDisplay}</span>
               </div>
               <div className="font-retro text-lg text-retro-teal tracking-widest">

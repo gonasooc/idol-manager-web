@@ -5,11 +5,11 @@ import { bondLevelAtom, personalityScoreAtom, currentPersonaAtom } from '../stor
 import { motion } from 'framer-motion';
 
 const PERSONA_MAP: Record<string, { title: string; emoji: string; color: string }> = {
-  'gentle-confident': { title: 'Warm Leader', emoji: '*', color: '#FFD700' },
-  'gentle-shy': { title: 'Sunshine', emoji: '+', color: '#FFA500' },
-  'cold-confident': { title: 'Fierce Star', emoji: '!', color: '#FF4500' },
-  'cold-shy': { title: 'Silent Pro', emoji: '-', color: '#4169E1' },
-  'balanced': { title: 'Balanced', emoji: '=', color: '#32CD32' },
+  'gentle-confident': { title: '따뜻한 리더', emoji: '*', color: '#FFD700' },
+  'gentle-shy': { title: '햇살', emoji: '+', color: '#FFA500' },
+  'cold-confident': { title: '카리스마 스타', emoji: '!', color: '#FF4500' },
+  'cold-shy': { title: '묵묵한 프로', emoji: '-', color: '#4169E1' },
+  'balanced': { title: '균형잡힌', emoji: '=', color: '#32CD32' },
 };
 
 // Retro stat box component
@@ -94,9 +94,9 @@ export function ReportPage() {
           </div>
           <div className="retro-content text-center py-8">
             <div className="font-pixel text-4xl mb-4 text-retro-gold">[?]</div>
-            <h2 className="font-pixel text-sm text-gray-800 mb-4">NO DATA YET</h2>
+            <h2 className="font-pixel text-sm text-gray-800 mb-4">데이터 없음</h2>
             <p className="font-retro text-xl text-gray-600">
-              Chat with your idol to start recording growth data!
+              아이돌과 대화를 시작하면 성장 데이터가 기록됩니다!
             </p>
           </div>
         </motion.div>
@@ -124,25 +124,25 @@ export function ReportPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <RetroStatBox
                 icon={persona.emoji}
-                label="PERSONA"
+                label="성격"
                 value={persona.title}
                 color="#ff69b4"
               />
               <RetroStatBox
                 icon="<3"
-                label="BOND LV"
+                label="친밀도"
                 value={bondLevel}
                 color="#ff6b6b"
               />
               <RetroStatBox
                 icon=":)"
-                label="KINDNESS"
+                label="상냥함"
                 value={`${personality.kindness > 0 ? '+' : ''}${personality.kindness}`}
                 color="#ffd700"
               />
               <RetroStatBox
                 icon="!!"
-                label="CONFIDENCE"
+                label="자신감"
                 value={`${personality.confidence > 0 ? '+' : ''}${personality.confidence}`}
                 color="#40e0d0"
               />
@@ -164,25 +164,25 @@ export function ReportPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <RetroStatBox
                 icon="##"
-                label="TOTAL RECORDS"
+                label="총 기록"
                 value={`${stats.totalSnapshots}`}
                 color="#c0c0c0"
               />
               <RetroStatBox
                 icon="^^"
-                label="MAX BOND"
+                label="최고 친밀도"
                 value={stats.maxBondLevel}
                 color="#32cd32"
               />
               <RetroStatBox
                 icon="vv"
-                label="MIN BOND"
+                label="최저 친밀도"
                 value={stats.minBondLevel}
                 color="#f4a460"
               />
               <RetroStatBox
                 icon={PERSONA_MAP[stats.mostFrequentPersona]?.emoji || '?'}
-                label="MAIN PERSONA"
+                label="주요 성격"
                 value={PERSONA_MAP[stats.mostFrequentPersona]?.title || 'Unknown'}
                 color="#4169e1"
               />
@@ -198,7 +198,7 @@ export function ReportPage() {
           className="retro-window"
         >
           <div className="retro-titlebar">
-            <span>BOND_GRAPH.exe</span>
+            <span>친밀도_그래프.exe</span>
           </div>
           <div className="retro-content bg-retro-blue-dark">
             <ResponsiveContainer width="100%" height={300}>
@@ -234,7 +234,7 @@ export function ReportPage() {
                   strokeWidth={3}
                   dot={{ fill: '#ff6b6b', r: 4, strokeWidth: 0 }}
                   activeDot={{ r: 6, fill: '#ff69b4' }}
-                  name="Bond Level"
+                  name="친밀도"
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -282,7 +282,7 @@ export function ReportPage() {
                   stroke="#ff69b4"
                   strokeWidth={3}
                   dot={{ fill: '#ff69b4', r: 4, strokeWidth: 0 }}
-                  name="Kindness"
+                  name="상냥함"
                 />
                 <Line
                   type="stepAfter"
@@ -290,7 +290,7 @@ export function ReportPage() {
                   stroke="#40e0d0"
                   strokeWidth={3}
                   dot={{ fill: '#40e0d0', r: 4, strokeWidth: 0 }}
-                  name="Confidence"
+                  name="자신감"
                 />
               </LineChart>
             </ResponsiveContainer>

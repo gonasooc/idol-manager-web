@@ -40,34 +40,34 @@ export function DebutPage() {
             </div>
           </motion.div>
 
-          <h1 className="font-pixel text-sm text-gray-800 mb-4">DEBUT CARD GENERATOR</h1>
+          <h1 className="font-pixel text-sm text-gray-800 mb-4">데뷔 카드 생성기</h1>
           <p className="font-retro text-xl text-gray-600 mb-6">
-            Create a special card with your idol's growth!
+            아이돌의 성장을 담은 특별한 카드를 만드세요!
           </p>
 
           {/* Current Stats Preview */}
           <div className="bg-black p-3 mb-6 space-y-2 text-left">
             <div className="flex justify-between items-center border-b border-gray-700 pb-2">
-              <span className="font-retro text-lg text-gray-400">PERSONA</span>
+              <span className="font-retro text-lg text-gray-400">성격</span>
               <span className="font-pixel text-xs text-retro-pink">{persona.emoji} {persona.title}</span>
             </div>
             <div className="flex justify-between items-center border-b border-gray-700 pb-2">
-              <span className="font-retro text-lg text-gray-400">BOND LV</span>
+              <span className="font-retro text-lg text-gray-400">친밀도</span>
               <span className="font-pixel text-xs text-retro-red">{bondLevel}</span>
             </div>
             <div className="flex justify-between items-center border-b border-gray-700 pb-2">
-              <span className="font-retro text-lg text-gray-400">KINDNESS</span>
+              <span className="font-retro text-lg text-gray-400">상냥함</span>
               <span className="font-pixel text-xs text-retro-gold">{personality.kindness > 0 ? '+' : ''}{personality.kindness}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="font-retro text-lg text-gray-400">CONFIDENCE</span>
+              <span className="font-retro text-lg text-gray-400">자신감</span>
               <span className="font-pixel text-xs text-retro-teal">{personality.confidence > 0 ? '+' : ''}{personality.confidence}</span>
             </div>
           </div>
 
           {/* Grade Info */}
           <div className="bg-retro-blue-dark p-3 mb-6 border-2 border-retro-gold">
-            <div className="font-pixel text-xs text-retro-gold mb-3">GRADE SYSTEM</div>
+            <div className="font-pixel text-xs text-retro-gold mb-3">등급 시스템</div>
             <div className="space-y-1 font-retro text-lg">
               <div className="flex justify-between text-retro-pink">
                 <span>S RANK (90+)</span>
@@ -94,7 +94,7 @@ export function DebutPage() {
             onClick={() => setIsModalOpen(true)}
             className="retro-btn retro-btn-primary w-full py-4"
           >
-            GENERATE CARD
+            카드 생성
           </motion.button>
         </div>
       </motion.div>

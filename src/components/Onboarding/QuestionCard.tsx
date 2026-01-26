@@ -59,7 +59,7 @@ export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
           {/* Hint */}
           <div className="mt-4 text-center">
             <span className="font-retro text-lg text-gray-500">
-              SELECT AN OPTION TO CONTINUE
+              계속하려면 옵션을 선택하세요
             </span>
           </div>
         </div>

@@ -14,7 +14,7 @@ export function ProgressBar({ current, total }: ProgressBarProps) {
       {/* Header */}
       <div className="flex justify-between items-center mb-2">
         <span className="font-pixel text-xs text-retro-teal">
-          QUESTION {current}/{total}
+          질문 {current}/{total}
         </span>
         <span className="font-pixel text-xs text-retro-gold">
           {Math.round(percentage)}%
@@ -41,7 +41,7 @@ export function ProgressBar({ current, total }: ProgressBarProps) {
       {/* Loading text effect */}
       <div className="mt-2 text-center">
         <span className="font-retro text-lg text-gray-500">
-          LOADING PRODUCER DATA
+          프로듀서 데이터 로딩 중
           <motion.span
             animate={{ opacity: [1, 0, 1] }}
             transition={{ duration: 1, repeat: Infinity }}

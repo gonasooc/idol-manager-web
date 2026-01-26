@@ -149,7 +149,7 @@ export function ChatContainer() {
             <p className="font-retro text-xl text-gray-600">{currentPersona.description}</p>
             <div className="mt-6 p-4 border-2 border-dashed border-retro-teal bg-retro-teal/10">
               <p className="font-retro text-lg text-gray-700 blink-cursor">
-                Press START to begin conversation
+                대화를 시작하려면 메시지를 보내세요
               </p>
             </div>
           </div>

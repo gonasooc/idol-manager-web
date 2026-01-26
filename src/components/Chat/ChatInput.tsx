@@ -28,7 +28,7 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
       <div className="max-w-4xl mx-auto flex items-end gap-2">
         {/* Input Label */}
         <div className="font-pixel text-xs text-gray-700 mb-2 hidden sm:block">
-          MSG:
+          메시지:
         </div>
 
         {/* Retro Text Input */}
@@ -36,7 +36,7 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Type your message..."
+          placeholder="메시지를 입력하세요..."
           disabled={disabled}
           rows={1}
           className="retro-input flex-1 resize-none disabled:bg-gray-200 disabled:cursor-not-allowed"
@@ -57,14 +57,14 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
               : 'retro-btn-primary'
           }`}
         >
-          SEND
+          전송
         </motion.button>
       </div>
 
       {/* Keyboard hint */}
       <div className="max-w-4xl mx-auto mt-2">
         <span className="font-retro text-sm text-gray-600">
-          Press ENTER to send | SHIFT+ENTER for new line
+          ENTER로 전송 | SHIFT+ENTER로 줄바꿈
         </span>
       </div>
     </div>
