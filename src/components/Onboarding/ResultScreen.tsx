@@ -23,11 +23,9 @@ function RetroStatBar({
   color: string;
   showSign?: boolean;
 }) {
-  const segments = 10;
-  const normalizedValue = showSign
-    ? Math.abs(value) / (maxValue / 2)
-    : value / maxValue;
-  const filledSegments = Math.round(normalizedValue * segments);
+  const percentage = showSign
+    ? (Math.abs(value) / (maxValue / 2)) * 100
+    : (value / maxValue) * 100;
 
   return (
     <div className="space-y-1">
@@ -38,23 +36,16 @@ function RetroStatBar({
         </span>
       </div>
       <div className="retro-gauge">
-        {Array.from({ length: segments }).map((_, index) => (
-          <motion.div
-            key={index}
-            className="retro-gauge-segment"
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              backgroundColor: index < filledSegments ? color : '#333',
-            }}
-            transition={{ delay: index * 0.05 }}
-            style={{
-              boxShadow: index < filledSegments
-                ? 'inset 0 -4px 0 rgba(0, 0, 0, 0.3)'
-                : 'none',
-            }}
-          />
-        ))}
+        <motion.div
+          className="h-4"
+          initial={{ width: 0, opacity: 0 }}
+          animate={{ width: `${percentage}%`, opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          style={{
+            backgroundColor: color,
+            boxShadow: 'inset 0 -4px 0 rgba(0, 0, 0, 0.3)',
+          }}
+        />
       </div>
     </div>
   );

@@ -4,6 +4,8 @@ import {
   messagesAtom,
   isTypingAtom,
   addMessageAtom,
+  updateMessageContentAtom,
+  appendMessageContentAtom,
 } from '../../store/chatAtoms';
 import {
   bondLevelAtom,
@@ -12,7 +14,7 @@ import {
   updateBondLevelAtom,
   updatePersonalityAtom,
 } from '../../store/atoms';
-import { sendChatMessage, checkHealth } from '../../services/api';
+import { sendChatMessageStream, checkHealth } from '../../services/api';
 import { sendMessage as sendMockMessage } from '../../services/mockChatApi';
 import { MessageBubble } from './MessageBubble';
 import { TypingIndicator } from './TypingIndicator';
@@ -20,9 +22,11 @@ import { ChatInput } from './ChatInput';
 import { ConnectionStatus } from '../UI/ConnectionStatus';
 
 export function ChatContainer() {
-  const messages = useAtomValue(messagesAtom);
+  const [messages, setMessages] = useAtom(messagesAtom);
   const [isTyping, setIsTyping] = useAtom(isTypingAtom);
   const addMessage = useSetAtom(addMessageAtom);
+  const updateMessageContent = useSetAtom(updateMessageContentAtom);
+  const appendMessageContent = useSetAtom(appendMessageContentAtom);
   const updateBond = useSetAtom(updateBondLevelAtom);
   const updatePersonality = useSetAtom(updatePersonalityAtom);
 
@@ -31,6 +35,7 @@ export function ChatContainer() {
   const currentPersona = useAtomValue(currentPersonaAtom);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const currentIdolMessageIdRef = useRef<string | null>(null);
 
   // Backend connection state
   const [isOnline, setIsOnline] = useState<boolean | null>(null);
@@ -63,64 +68,141 @@ export function ChatContainer() {
     // Show typing indicator
     setIsTyping(true);
 
-    try {
-      let result;
+    // Create idol message with unique ID and empty content
+    const idolMessageId = `${Date.now()}-${Math.random()}`;
+    currentIdolMessageIdRef.current = idolMessageId;
 
-      // Online: real API call
+    // Manually add message to have control over the ID
+    const newIdolMessage = {
+      id: idolMessageId,
+      role: 'idol' as const,
+      content: '',
+      timestamp: Date.now(),
+      isStreaming: true,
+    };
+
+    setMessages((prev) => [...prev, newIdolMessage]);
+
+    try {
+      // Online: use streaming API
       if (isOnline) {
         try {
-          result = await sendChatMessage({
-            message: content,
-            stats: {
-              bondLevel,
-              kindness: personalityScore.kindness,
-              confidence: personalityScore.confidence,
+          await sendChatMessageStream(
+            {
+              message: content,
+              stats: {
+                bondLevel,
+                kindness: personalityScore.kindness,
+                confidence: personalityScore.confidence,
+              },
+              persona: currentPersona.type,
             },
-            persona: currentPersona.type,
-          });
+            // onChunk: append text to message
+            (chunk: string) => {
+              appendMessageContent({
+                id: idolMessageId,
+                chunk: chunk,
+                isStreaming: true,
+              });
+            },
+            // onComplete: apply stat changes and mark streaming complete
+            (statChanges) => {
+              // Just mark streaming as complete, content is already accumulated
+              appendMessageContent({
+                id: idolMessageId,
+                chunk: '',
+                isStreaming: false,
+              });
+
+              // Apply stat changes
+              if (statChanges.bond !== undefined) {
+                updateBond(statChanges.bond);
+              }
+              if (
+                statChanges.kindness !== undefined ||
+                statChanges.confidence !== undefined
+              ) {
+                updatePersonality({
+                  kindness: statChanges.kindness,
+                  confidence: statChanges.confidence,
+                });
+              }
+            },
+            // onError: handle streaming errors
+            (error) => {
+              console.error('Stream error:', error);
+              updateMessageContent({
+                id: idolMessageId,
+                content: 'ERROR: Streaming failed...',
+                isStreaming: false,
+              });
+            }
+          );
         } catch (apiError) {
-          console.error('Backend API call failed, falling back to Mock API:', apiError);
+          console.error('Backend streaming failed, falling back to Mock API:', apiError);
           setIsOnline(false);
-          result = await sendMockMessage(content, {
+
+          // Fallback to mock API
+          const result = await sendMockMessage(content, {
             bondLevel,
             personalityScore,
             currentPersona,
           });
+
+          updateMessageContent({
+            id: idolMessageId,
+            content: result.response,
+            isStreaming: false,
+          });
+
+          // Apply stat changes
+          if (result.statChanges.bond !== undefined) {
+            updateBond(result.statChanges.bond);
+          }
+          if (
+            result.statChanges.kindness !== undefined ||
+            result.statChanges.confidence !== undefined
+          ) {
+            updatePersonality({
+              kindness: result.statChanges.kindness,
+              confidence: result.statChanges.confidence,
+            });
+          }
         }
       } else {
         // Offline: use Mock API
-        result = await sendMockMessage(content, {
+        const result = await sendMockMessage(content, {
           bondLevel,
           personalityScore,
           currentPersona,
         });
-      }
 
-      // Apply stat changes
-      if (result.statChanges.bond !== undefined) {
-        updateBond(result.statChanges.bond);
-      }
-      if (
-        result.statChanges.kindness !== undefined ||
-        result.statChanges.confidence !== undefined
-      ) {
-        updatePersonality({
-          kindness: result.statChanges.kindness,
-          confidence: result.statChanges.confidence,
+        updateMessageContent({
+          id: idolMessageId,
+          content: result.response,
+          isStreaming: false,
         });
-      }
 
-      // Add idol response
-      addMessage({
-        role: 'idol',
-        content: result.response,
-        statChanges: result.statChanges,
-      });
+        // Apply stat changes
+        if (result.statChanges.bond !== undefined) {
+          updateBond(result.statChanges.bond);
+        }
+        if (
+          result.statChanges.kindness !== undefined ||
+          result.statChanges.confidence !== undefined
+        ) {
+          updatePersonality({
+            kindness: result.statChanges.kindness,
+            confidence: result.statChanges.confidence,
+          });
+        }
+      }
     } catch (error) {
       console.error('Message send failed:', error);
-      addMessage({
-        role: 'idol',
+      updateMessageContent({
+        id: idolMessageId,
         content: 'ERROR: Communication failed...',
+        isStreaming: false,
       });
     } finally {
       setIsTyping(false);

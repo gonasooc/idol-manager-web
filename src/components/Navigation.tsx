@@ -18,7 +18,7 @@ export function Navigation() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-win95-medium border-t-2 border-t-white z-40">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-md mx-auto">
         <div className="flex">
           {NAV_ITEMS.map((item) => {
             const isActive = location.pathname === item.path;

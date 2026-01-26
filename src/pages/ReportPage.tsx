@@ -5,11 +5,11 @@ import { bondLevelAtom, personalityScoreAtom, currentPersonaAtom } from '../stor
 import { motion } from 'framer-motion';
 
 const PERSONA_MAP: Record<string, { title: string; emoji: string; color: string }> = {
-  'gentle-confident': { title: '따뜻한 리더', emoji: '*', color: '#FFD700' },
-  'gentle-shy': { title: '햇살', emoji: '+', color: '#FFA500' },
-  'cold-confident': { title: '카리스마 스타', emoji: '!', color: '#FF4500' },
-  'cold-shy': { title: '묵묵한 프로', emoji: '-', color: '#4169E1' },
-  'balanced': { title: '균형잡힌', emoji: '=', color: '#32CD32' },
+  'gentle-confident': { title: '다정한 리더', emoji: '*', color: '#FFD700' },
+  'gentle-shy': { title: '햇살 같은 동료', emoji: '+', color: '#FFA500' },
+  'cold-confident': { title: '독기 있는 연습생', emoji: '!', color: '#FF4500' },
+  'cold-shy': { title: '조용한 프로', emoji: '-', color: '#4169E1' },
+  'balanced': { title: '균형잡힌 아이돌', emoji: '=', color: '#32CD32' },
 };
 
 // Retro stat box component

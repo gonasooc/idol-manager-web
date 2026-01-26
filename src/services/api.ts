@@ -90,3 +90,81 @@ export async function getHealthStatus(): Promise<HealthResponse | null> {
     return null;
   }
 }
+
+export interface StatChanges {
+  bond?: number;
+  kindness?: number;
+  confidence?: number;
+}
+
+/**
+ * 채팅 메시지 전송 (SSE 스트리밍)
+ */
+export async function sendChatMessageStream(
+  request: ChatRequest,
+  onChunk: (text: string) => void,
+  onComplete: (statChanges: StatChanges) => void,
+  onError: (error: Error) => void
+): Promise<void> {
+  try {
+    const response = await fetch(`${API_URL}/api/chat/stream`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(request),
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ detail: 'Unknown error' }));
+      throw new Error(error.detail || 'API 요청 실패');
+    }
+
+    const reader = response.body?.getReader();
+    if (!reader) {
+      throw new Error('ReadableStream not supported');
+    }
+
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+
+      if (done) {
+        break;
+      }
+
+      // Decode the chunk and add to buffer
+      buffer += decoder.decode(value, { stream: true });
+
+      // Process complete SSE events
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || ''; // Keep incomplete line in buffer
+
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const data = line.slice(6).trim();
+
+          if (data === '[DONE]') {
+            continue;
+          }
+
+          try {
+            const parsed = JSON.parse(data);
+
+            if (parsed.type === 'chunk') {
+              onChunk(parsed.content);
+            } else if (parsed.type === 'done') {
+              onComplete(parsed.statChanges || {});
+            }
+          } catch (e) {
+            console.warn('Failed to parse SSE data:', data, e);
+          }
+        }
+      }
+    }
+  } catch (error) {
+    onError(error instanceof Error ? error : new Error('Unknown error'));
+  }
+}
