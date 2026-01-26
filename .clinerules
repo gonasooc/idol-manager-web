@@ -1,0 +1,30 @@
+# Idol Manager Web - Phase 1 Implementation Rules
+
+## Stack
+- Vite + React + TypeScript
+- Jotai for state management
+- Tailwind CSS for styling
+- Framer Motion for animations
+- Radix UI for accessible components
+
+## File Structure
+src/
+  store/
+    atoms.ts - Jotai atoms (bondLevel, personalityScore, etc.)
+  components/
+    StatsBar.tsx - Main stats dashboard
+    BondLevelBar.tsx - Progress bar for bond level
+    PersonalityGauge.tsx - Personality sliders
+    StatChangeAnimation.tsx - Floating text animations
+  types/
+    index.ts - TypeScript types
+  App.tsx
+  main.tsx
+  index.css
+
+## Coding Conventions
+- Use functional components with hooks
+- TypeScript strict mode
+- Tailwind for all styling
+- Korean language for UI text
+- Mobile-first responsive design
