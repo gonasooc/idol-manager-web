@@ -38,6 +38,7 @@ export interface Message {
   role: 'user' | 'idol';
   content: string;
   timestamp: number;
+  isStreaming?: boolean;
   statChanges?: {
     bond?: number;
     kindness?: number;

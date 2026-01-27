@@ -102,10 +102,10 @@ function RetroSliderGauge({
 
       {/* Labels */}
       <div className="flex justify-between font-retro text-sm">
-        <span className={!isPositive && intensity > 50 ? negativeColor + ' font-bold' : 'text-gray-500'}>
+        <span className={!isPositive && intensity > 50 ? negativeColor + ' font-bold' : 'text-gray-700'}>
           {negativeLabel}
         </span>
-        <span className={isPositive && intensity > 50 ? positiveColor + ' font-bold' : 'text-gray-500'}>
+        <span className={isPositive && intensity > 50 ? positiveColor + ' font-bold' : 'text-gray-700'}>
           {positiveLabel}
         </span>
       </div>
@@ -120,23 +120,23 @@ export function PersonalityGauge() {
     <div className="space-y-4">
       <div className="flex items-center gap-2">
         <span className="pixel-star" />
-        <h3 className="font-pixel text-xs text-gray-800">PERSONALITY</h3>
+        <h3 className="font-pixel text-xs text-gray-800">성격</h3>
       </div>
 
       <RetroSliderGauge
-        label="EMOTION"
+        label="감정"
         value={personality.kindness}
-        negativeLabel="COLD"
-        positiveLabel="WARM"
+        negativeLabel="차가움"
+        positiveLabel="따뜻함"
         negativeColor="text-retro-blue"
         positiveColor="text-retro-pink"
       />
 
       <RetroSliderGauge
-        label="ATTITUDE"
+        label="태도"
         value={personality.confidence}
-        negativeLabel="SHY"
-        positiveLabel="BOLD"
+        negativeLabel="소심함"
+        positiveLabel="대담함"
         negativeColor="text-retro-green"
         positiveColor="text-retro-orange"
       />

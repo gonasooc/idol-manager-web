@@ -68,7 +68,7 @@ export function StatsBar() {
                 </motion.span>
                 <div>
                   <h2 className="font-pixel text-sm text-gray-900">{persona.title}</h2>
-                  <p className="font-retro text-lg text-gray-600">{persona.description}</p>
+                  <p className="font-retro text-lg text-gray-700">{persona.description}</p>
                 </div>
               </motion.div>
 

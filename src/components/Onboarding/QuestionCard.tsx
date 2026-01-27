@@ -25,8 +25,8 @@ export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
         {/* Content */}
         <div className="retro-content">
           {/* Question Text */}
-          <div className="mb-6 p-4 bg-black text-center">
-            <h2 className="font-retro text-2xl text-retro-gold leading-relaxed">
+          <div className="mb-6 p-4 bg-gray-900 border-2 border-gray-700 text-center">
+            <h2 className="font-retro text-2xl text-amber-300 leading-relaxed drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]">
               {question.question}
             </h2>
           </div>
@@ -59,7 +59,7 @@ export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
           {/* Hint */}
           <div className="mt-4 text-center">
             <span className="font-retro text-lg text-gray-500">
-              SELECT AN OPTION TO CONTINUE
+              계속하려면 옵션을 선택하세요
             </span>
           </div>
         </div>

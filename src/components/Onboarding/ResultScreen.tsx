@@ -23,38 +23,29 @@ function RetroStatBar({
   color: string;
   showSign?: boolean;
 }) {
-  const segments = 10;
-  const normalizedValue = showSign
-    ? Math.abs(value) / (maxValue / 2)
-    : value / maxValue;
-  const filledSegments = Math.round(normalizedValue * segments);
+  const percentage = showSign
+    ? (Math.abs(value) / (maxValue / 2)) * 100
+    : (value / maxValue) * 100;
 
   return (
     <div className="space-y-1">
       <div className="flex justify-between items-center">
-        <span className="font-pixel text-xs text-gray-300">{label}</span>
+        <span className="font-pixel text-xs text-gray-700">{label}</span>
         <span className="font-pixel text-xs" style={{ color }}>
           {showSign && value > 0 ? '+' : ''}{value}
         </span>
       </div>
       <div className="retro-gauge">
-        {Array.from({ length: segments }).map((_, index) => (
-          <motion.div
-            key={index}
-            className="retro-gauge-segment"
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              backgroundColor: index < filledSegments ? color : '#333',
-            }}
-            transition={{ delay: index * 0.05 }}
-            style={{
-              boxShadow: index < filledSegments
-                ? 'inset 0 -4px 0 rgba(0, 0, 0, 0.3)'
-                : 'none',
-            }}
-          />
-        ))}
+        <motion.div
+          className="h-4"
+          initial={{ width: 0, opacity: 0 }}
+          animate={{ width: `${percentage}%`, opacity: 1 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          style={{
+            backgroundColor: color,
+            boxShadow: 'inset 0 -4px 0 rgba(0, 0, 0, 0.3)',
+          }}
+        />
       </div>
     </div>
   );
@@ -108,7 +99,7 @@ export function ResultScreen({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="font-retro text-xl text-gray-600"
+              className="font-retro text-xl text-gray-700"
             >
               {personaDescription}
             </motion.p>
@@ -117,18 +108,18 @@ export function ResultScreen({
           {/* Stats Display */}
           <div className="bg-retro-blue-dark p-4 space-y-4 mb-6">
             <div className="font-pixel text-xs text-center text-retro-teal mb-4">
-              INITIAL STATS CALCULATED
+              초기 스탯 계산 완료
             </div>
 
             <RetroStatBar
-              label="BOND LEVEL"
+              label="친밀도"
               value={stats.bondLevel}
               maxValue={100}
               color="#ff69b4"
             />
 
             <RetroStatBar
-              label="KINDNESS"
+              label="상냥함"
               value={stats.kindness}
               maxValue={200}
               color="#ffd700"
@@ -136,7 +127,7 @@ export function ResultScreen({
             />
 
             <RetroStatBar
-              label="CONFIDENCE"
+              label="자신감"
               value={stats.confidence}
               maxValue={200}
               color="#40e0d0"
@@ -147,7 +138,7 @@ export function ResultScreen({
           {/* Decorative message */}
           <div className="text-center mb-6 p-3 border-2 border-dashed border-retro-gold bg-retro-gold/10">
             <span className="font-retro text-lg text-gray-700">
-              YOUR PRODUCER PROFILE IS READY!
+              프로듀서 프로필이 준비되었습니다!
             </span>
           </div>
 
@@ -160,7 +151,7 @@ export function ResultScreen({
             transition={{ delay: 0.8 }}
             whileTap={{ scale: 0.98 }}
           >
-            START GAME
+            게임 시작
           </motion.button>
         </div>
       </div>

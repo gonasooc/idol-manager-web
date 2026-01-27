@@ -89,7 +89,7 @@ export function OnboardingPage() {
               IDOL MANAGER
             </h1>
             <p className="font-retro text-xl text-gray-600">
-              Tell us about your producing style
+              당신의 프로듀싱 스타일을 알려주세요
             </p>
           </div>
         </motion.div>

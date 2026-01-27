@@ -11,7 +11,7 @@ export function TypingIndicator() {
       <motion.div
         className="flex-shrink-0 w-10 h-10 bg-win95-medium border-2 border-t-white border-l-white border-b-gray-600 border-r-gray-600 flex items-center justify-center text-xl"
         animate={{ y: [0, -2, 0] }}
-        transition={{ duration: 0.5, repeat: Infinity }}
+        transition={{ duration: 1, repeat: Infinity }}
       >
         {persona.emoji}
       </motion.div>
@@ -30,9 +30,9 @@ export function TypingIndicator() {
                   scaleY: [0.5, 1, 0.5],
                 }}
                 transition={{
-                  duration: 0.5,
+                  duration: 1,
                   repeat: Infinity,
-                  delay: i * 0.15,
+                  delay: i * 0.3,
                 }}
               />
             ))}

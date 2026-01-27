@@ -18,33 +18,26 @@ function PixelHeart({ filled, color }: { filled: boolean; color: string }) {
   );
 }
 
-// Segmented Gauge Component
-function SegmentedGauge({ value, max = 100 }: { value: number; max?: number }) {
-  const segments = 10;
-  const filledSegments = Math.floor((value / max) * segments);
+// Continuous Gauge Component
+function ContinuousGauge({ value, max = 100 }: { value: number; max?: number }) {
+  const percentage = (value / max) * 100;
 
-  const getSegmentColor = (index: number) => {
-    if (index >= filledSegments) return '';
-    if (value >= 90) return 'max';
-    if (value >= 60) return 'high';
-    if (value >= 30) return 'mid';
-    return 'low';
+  const getBarColor = () => {
+    if (value >= 90) return 'bg-retro-pink';
+    if (value >= 60) return 'bg-retro-gold';
+    if (value >= 30) return 'bg-retro-orange';
+    return 'bg-retro-red';
   };
 
   return (
     <div className="retro-gauge flex-1">
-      {Array.from({ length: segments }).map((_, index) => (
-        <motion.div
-          key={index}
-          className={`retro-gauge-segment ${
-            index < filledSegments ? `filled ${getSegmentColor(index)}` : ''
-          }`}
-          initial={false}
-          animate={{
-            opacity: index < filledSegments ? 1 : 0.3,
-          }}
-        />
-      ))}
+      <motion.div
+        className={`h-4 ${getBarColor()}`}
+        style={{ boxShadow: 'inset 0 -4px 0 rgba(0, 0, 0, 0.3)' }}
+        initial={{ width: 0 }}
+        animate={{ width: `${percentage}%` }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+      />
     </div>
   );
 }
@@ -54,10 +47,10 @@ export function BondLevelBar() {
 
   // Determine bond level tier
   const getTier = (level: number) => {
-    if (level >= 90) return { label: 'MAX', color: 'max' };
-    if (level >= 60) return { label: 'HIGH', color: 'high' };
-    if (level >= 30) return { label: 'MID', color: 'mid' };
-    return { label: 'LOW', color: 'low' };
+    if (level >= 90) return { label: '최고', color: 'max' };
+    if (level >= 60) return { label: '높음', color: 'high' };
+    if (level >= 30) return { label: '보통', color: 'mid' };
+    return { label: '낮음', color: 'low' };
   };
 
   const tier = getTier(bondLevel);
@@ -88,7 +81,7 @@ export function BondLevelBar() {
               </motion.div>
             ))}
           </div>
-          <span className="font-pixel text-xs text-gray-800">BOND LV</span>
+          <span className="font-pixel text-xs text-gray-800">친밀도</span>
         </div>
 
         {/* Value display */}
@@ -104,12 +97,12 @@ export function BondLevelBar() {
           <span
             className={`font-pixel text-xs px-2 py-1 ${
               tier.color === 'max'
-                ? 'bg-retro-pink text-white levelup-glow'
+                ? 'bg-pink-600 text-white levelup-glow'
                 : tier.color === 'high'
-                ? 'bg-retro-gold text-gray-900'
+                ? 'bg-amber-600 text-white'
                 : tier.color === 'mid'
-                ? 'bg-retro-orange text-gray-900'
-                : 'bg-retro-red text-white'
+                ? 'bg-orange-600 text-white'
+                : 'bg-red-600 text-white'
             }`}
           >
             {tier.label}
@@ -117,19 +110,19 @@ export function BondLevelBar() {
         </div>
       </div>
 
-      {/* Segmented Progress Bar */}
-      <SegmentedGauge value={bondLevel} />
+      {/* Continuous Progress Bar */}
+      <ContinuousGauge value={bondLevel} />
 
       {/* Level markers */}
-      <div className="flex justify-between font-retro text-sm text-gray-600 px-1">
+      <div className="flex justify-between font-retro text-sm text-gray-700 px-1">
         <span>0</span>
-        <span className={bondLevel >= 30 ? 'text-retro-orange font-bold' : ''}>
+        <span className={bondLevel >= 30 ? 'text-orange-700 font-bold' : ''}>
           30
         </span>
-        <span className={bondLevel >= 60 ? 'text-retro-gold font-bold' : ''}>
+        <span className={bondLevel >= 60 ? 'text-amber-700 font-bold' : ''}>
           60
         </span>
-        <span className={bondLevel >= 90 ? 'text-retro-pink font-bold' : ''}>
+        <span className={bondLevel >= 90 ? 'text-pink-600 font-bold' : ''}>
           90
         </span>
         <span>100</span>

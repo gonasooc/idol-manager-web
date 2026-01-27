@@ -4,6 +4,8 @@ import {
   messagesAtom,
   isTypingAtom,
   addMessageAtom,
+  updateMessageContentAtom,
+  appendMessageContentAtom,
 } from '../../store/chatAtoms';
 import {
   bondLevelAtom,
@@ -12,17 +14,18 @@ import {
   updateBondLevelAtom,
   updatePersonalityAtom,
 } from '../../store/atoms';
-import { sendChatMessage, checkHealth } from '../../services/api';
-import { sendMessage as sendMockMessage } from '../../services/mockChatApi';
+import { sendChatMessageStream, checkHealth } from '../../services/api';
 import { MessageBubble } from './MessageBubble';
 import { TypingIndicator } from './TypingIndicator';
 import { ChatInput } from './ChatInput';
 import { ConnectionStatus } from '../UI/ConnectionStatus';
 
 export function ChatContainer() {
-  const messages = useAtomValue(messagesAtom);
+  const [messages, setMessages] = useAtom(messagesAtom);
   const [isTyping, setIsTyping] = useAtom(isTypingAtom);
   const addMessage = useSetAtom(addMessageAtom);
+  const updateMessageContent = useSetAtom(updateMessageContentAtom);
+  const appendMessageContent = useSetAtom(appendMessageContentAtom);
   const updateBond = useSetAtom(updateBondLevelAtom);
   const updatePersonality = useSetAtom(updatePersonalityAtom);
 
@@ -31,6 +34,7 @@ export function ChatContainer() {
   const currentPersona = useAtomValue(currentPersonaAtom);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const currentIdolMessageIdRef = useRef<string | null>(null);
 
   // Backend connection state
   const [isOnline, setIsOnline] = useState<boolean | null>(null);
@@ -54,6 +58,11 @@ export function ChatContainer() {
   }, []);
 
   const handleSendMessage = async (content: string) => {
+    // Check if online
+    if (!isOnline) {
+      return; // 오프라인이면 메시지 전송 불가
+    }
+
     // Add user message
     addMessage({
       role: 'user',
@@ -63,65 +72,83 @@ export function ChatContainer() {
     // Show typing indicator
     setIsTyping(true);
 
+    // Create idol message with unique ID and empty content
+    const idolMessageId = `${Date.now()}-${Math.random()}`;
+    currentIdolMessageIdRef.current = idolMessageId;
+
+    // Manually add message to have control over the ID
+    const newIdolMessage = {
+      id: idolMessageId,
+      role: 'idol' as const,
+      content: '',
+      timestamp: Date.now(),
+      isStreaming: true,
+    };
+
+    setMessages((prev) => [...prev, newIdolMessage]);
+
     try {
-      let result;
-
-      // Online: real API call
-      if (isOnline) {
-        try {
-          result = await sendChatMessage({
-            message: content,
-            stats: {
-              bondLevel,
-              kindness: personalityScore.kindness,
-              confidence: personalityScore.confidence,
-            },
-            persona: currentPersona.type,
-          });
-        } catch (apiError) {
-          console.error('Backend API call failed, falling back to Mock API:', apiError);
-          setIsOnline(false);
-          result = await sendMockMessage(content, {
+      await sendChatMessageStream(
+        {
+          message: content,
+          stats: {
             bondLevel,
-            personalityScore,
-            currentPersona,
+            kindness: personalityScore.kindness,
+            confidence: personalityScore.confidence,
+          },
+          persona: currentPersona.type,
+        },
+        // onChunk: append text to message
+        (chunk: string) => {
+          appendMessageContent({
+            id: idolMessageId,
+            chunk: chunk,
+            isStreaming: true,
           });
+        },
+        // onComplete: apply stat changes and mark streaming complete
+        (statChanges) => {
+          // Mark streaming as complete and save statChanges to message
+          appendMessageContent({
+            id: idolMessageId,
+            chunk: '',
+            isStreaming: false,
+            statChanges,
+          });
+
+          // Apply stat changes
+          if (statChanges.bond !== undefined) {
+            updateBond(statChanges.bond);
+          }
+          if (
+            statChanges.kindness !== undefined ||
+            statChanges.confidence !== undefined
+          ) {
+            updatePersonality({
+              kindness: statChanges.kindness,
+              confidence: statChanges.confidence,
+            });
+          }
+        },
+        // onError: handle streaming errors
+        (error) => {
+          console.error('Stream error:', error);
+          updateMessageContent({
+            id: idolMessageId,
+            content: '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.',
+            isStreaming: false,
+          });
+          setIsOnline(false);
         }
-      } else {
-        // Offline: use Mock API
-        result = await sendMockMessage(content, {
-          bondLevel,
-          personalityScore,
-          currentPersona,
-        });
-      }
-
-      // Apply stat changes
-      if (result.statChanges.bond !== undefined) {
-        updateBond(result.statChanges.bond);
-      }
-      if (
-        result.statChanges.kindness !== undefined ||
-        result.statChanges.confidence !== undefined
-      ) {
-        updatePersonality({
-          kindness: result.statChanges.kindness,
-          confidence: result.statChanges.confidence,
-        });
-      }
-
-      // Add idol response
-      addMessage({
-        role: 'idol',
-        content: result.response,
-        statChanges: result.statChanges,
-      });
+      );
     } catch (error) {
       console.error('Message send failed:', error);
-      addMessage({
-        role: 'idol',
-        content: 'ERROR: Communication failed...',
+      updateMessageContent({
+        id: idolMessageId,
+        content: '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.',
+        isStreaming: false,
       });
+      setIsOnline(false);
     } finally {
       setIsTyping(false);
     }
@@ -145,11 +172,11 @@ export function ChatContainer() {
         {messages.length === 0 && (
           <div className="text-center py-12">
             <div className="text-6xl mb-4 animate-pixel-bounce">{currentPersona.emoji}</div>
-            <p className="font-pixel text-sm text-gray-800 mb-2">{currentPersona.title}</p>
-            <p className="font-retro text-xl text-gray-600">{currentPersona.description}</p>
+            <p className="font-pixel text-sm text-gray-900 mb-2">{currentPersona.title}</p>
+            <p className="font-retro text-xl text-gray-700">{currentPersona.description}</p>
             <div className="mt-6 p-4 border-2 border-dashed border-retro-teal bg-retro-teal/10">
               <p className="font-retro text-lg text-gray-700 blink-cursor">
-                Press START to begin conversation
+                대화를 시작하려면 메시지를 보내세요
               </p>
             </div>
           </div>
@@ -164,8 +191,17 @@ export function ChatContainer() {
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Offline Warning */}
+      {isOnline === false && (
+        <div className="px-4 py-2 bg-red-100 border-t-2 border-red-400">
+          <p className="font-retro text-sm text-red-700 text-center">
+            서버에 연결할 수 없습니다. 백엔드 서버를 확인해주세요.
+          </p>
+        </div>
+      )}
+
       {/* Chat Input */}
-      <ChatInput onSend={handleSendMessage} disabled={isTyping} />
+      <ChatInput onSend={handleSendMessage} disabled={isTyping || isOnline === false} />
     </div>
   );
 }

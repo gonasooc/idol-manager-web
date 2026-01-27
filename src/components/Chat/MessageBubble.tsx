@@ -11,6 +11,11 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   const persona = useAtomValue(currentPersonaAtom);
   const isUser = message.role === 'user';
 
+  // Don't render idol messages without content (TypingIndicator handles this state)
+  if (!isUser && !message.content) {
+    return null;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -39,7 +44,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       >
         {/* Idol name (only for idol messages) */}
         {!isUser && (
-          <div className="font-pixel text-xs text-gray-600 mb-2 pb-1 border-b border-dashed border-gray-400">
+          <div className="font-pixel text-xs text-gray-800 mb-2 pb-1 border-b border-dashed border-gray-500">
             {persona.title}
           </div>
         )}
@@ -51,38 +56,38 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 
         {/* Stat changes display */}
         {message.statChanges && (
-          <div className="mt-2 pt-2 border-t border-dashed border-gray-400 flex flex-wrap gap-2">
+          <div className="mt-2 pt-2 border-t border-dashed border-gray-500 flex flex-wrap gap-2">
             {message.statChanges.bond !== undefined && message.statChanges.bond !== 0 && (
               <span
                 className={`font-pixel text-xs px-2 py-1 ${
                   message.statChanges.bond > 0
-                    ? 'bg-retro-pink text-white'
-                    : 'bg-retro-red text-white'
+                    ? 'bg-pink-600 text-white'
+                    : 'bg-red-700 text-white'
                 }`}
               >
-                BOND {message.statChanges.bond > 0 ? '+' : ''}{message.statChanges.bond}
+                친밀도 {message.statChanges.bond > 0 ? '+' : ''}{message.statChanges.bond}
               </span>
             )}
             {message.statChanges.kindness !== undefined && message.statChanges.kindness !== 0 && (
               <span
                 className={`font-pixel text-xs px-2 py-1 ${
                   message.statChanges.kindness > 0
-                    ? 'bg-retro-gold text-gray-900'
-                    : 'bg-retro-blue text-white'
+                    ? 'bg-amber-600 text-white'
+                    : 'bg-blue-700 text-white'
                 }`}
               >
-                KIND {message.statChanges.kindness > 0 ? '+' : ''}{message.statChanges.kindness}
+                따뜻함 {message.statChanges.kindness > 0 ? '+' : ''}{message.statChanges.kindness}
               </span>
             )}
             {message.statChanges.confidence !== undefined && message.statChanges.confidence !== 0 && (
               <span
                 className={`font-pixel text-xs px-2 py-1 ${
                   message.statChanges.confidence > 0
-                    ? 'bg-retro-orange text-gray-900'
-                    : 'bg-retro-green text-white'
+                    ? 'bg-orange-600 text-white'
+                    : 'bg-emerald-700 text-white'
                 }`}
               >
-                CONF {message.statChanges.confidence > 0 ? '+' : ''}{message.statChanges.confidence}
+                대담함 {message.statChanges.confidence > 0 ? '+' : ''}{message.statChanges.confidence}
               </span>
             )}
           </div>
@@ -91,7 +96,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         {/* Timestamp */}
         <div
           className={`font-retro text-sm mt-2 ${
-            isUser ? 'text-gray-700' : 'text-gray-500'
+            isUser ? 'text-gray-700' : 'text-gray-700'
           }`}
         >
           {new Date(message.timestamp).toLocaleTimeString('ko-KR', {
