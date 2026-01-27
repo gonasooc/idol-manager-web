@@ -107,11 +107,12 @@ export function ChatContainer() {
             },
             // onComplete: apply stat changes and mark streaming complete
             (statChanges) => {
-              // Just mark streaming as complete, content is already accumulated
+              // Mark streaming as complete and save statChanges to message
               appendMessageContent({
                 id: idolMessageId,
                 chunk: '',
                 isStreaming: false,
+                statChanges,
               });
 
               // Apply stat changes
@@ -153,6 +154,7 @@ export function ChatContainer() {
             id: idolMessageId,
             content: result.response,
             isStreaming: false,
+            statChanges: result.statChanges,
           });
 
           // Apply stat changes
@@ -181,6 +183,7 @@ export function ChatContainer() {
           id: idolMessageId,
           content: result.response,
           isStreaming: false,
+          statChanges: result.statChanges,
         });
 
         // Apply stat changes

@@ -34,11 +34,11 @@ export const clearMessagesAtom = atom(
 // 특정 메시지의 content 업데이트 (덮어쓰기)
 export const updateMessageContentAtom = atom(
   null,
-  (get, set, update: { id: string; content: string; isStreaming?: boolean }) => {
+  (get, set, update: { id: string; content: string; isStreaming?: boolean; statChanges?: { bond?: number; kindness?: number; confidence?: number } }) => {
     const currentMessages = get(messagesAtom);
     const updatedMessages = currentMessages.map((msg) =>
       msg.id === update.id
-        ? { ...msg, content: update.content, isStreaming: update.isStreaming }
+        ? { ...msg, content: update.content, isStreaming: update.isStreaming, ...(update.statChanges && { statChanges: update.statChanges }) }
         : msg
     );
     set(messagesAtom, updatedMessages);
@@ -48,14 +48,15 @@ export const updateMessageContentAtom = atom(
 // 특정 메시지의 content에 텍스트 추가 (append)
 export const appendMessageContentAtom = atom(
   null,
-  (get, set, update: { id: string; chunk: string; isStreaming?: boolean }) => {
+  (get, set, update: { id: string; chunk: string; isStreaming?: boolean; statChanges?: { bond?: number; kindness?: number; confidence?: number } }) => {
     const currentMessages = get(messagesAtom);
     const updatedMessages = currentMessages.map((msg) =>
       msg.id === update.id
         ? {
             ...msg,
             content: msg.content + update.chunk,
-            isStreaming: update.isStreaming !== undefined ? update.isStreaming : msg.isStreaming
+            isStreaming: update.isStreaming !== undefined ? update.isStreaming : msg.isStreaming,
+            ...(update.statChanges && { statChanges: update.statChanges })
           }
         : msg
     );

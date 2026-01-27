@@ -11,6 +11,11 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   const persona = useAtomValue(currentPersonaAtom);
   const isUser = message.role === 'user';
 
+  // Don't render idol messages without content (TypingIndicator handles this state)
+  if (!isUser && !message.content) {
+    return null;
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -56,11 +61,11 @@ export function MessageBubble({ message }: MessageBubbleProps) {
               <span
                 className={`font-pixel text-xs px-2 py-1 ${
                   message.statChanges.bond > 0
-                    ? 'bg-retro-pink text-white'
+                    ? 'bg-retro-pink text-gray-900'
                     : 'bg-retro-red text-white'
                 }`}
               >
-                BOND {message.statChanges.bond > 0 ? '+' : ''}{message.statChanges.bond}
+                친밀도 {message.statChanges.bond > 0 ? '+' : ''}{message.statChanges.bond}
               </span>
             )}
             {message.statChanges.kindness !== undefined && message.statChanges.kindness !== 0 && (
@@ -71,7 +76,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
                     : 'bg-retro-blue text-white'
                 }`}
               >
-                KIND {message.statChanges.kindness > 0 ? '+' : ''}{message.statChanges.kindness}
+                따뜻함 {message.statChanges.kindness > 0 ? '+' : ''}{message.statChanges.kindness}
               </span>
             )}
             {message.statChanges.confidence !== undefined && message.statChanges.confidence !== 0 && (
@@ -82,7 +87,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
                     : 'bg-retro-green text-white'
                 }`}
               >
-                CONF {message.statChanges.confidence > 0 ? '+' : ''}{message.statChanges.confidence}
+                대담함 {message.statChanges.confidence > 0 ? '+' : ''}{message.statChanges.confidence}
               </span>
             )}
           </div>
