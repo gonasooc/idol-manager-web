@@ -97,12 +97,12 @@ export function BondLevelBar() {
           <span
             className={`font-pixel text-xs px-2 py-1 ${
               tier.color === 'max'
-                ? 'bg-retro-pink text-white levelup-glow'
+                ? 'bg-pink-600 text-white levelup-glow'
                 : tier.color === 'high'
-                ? 'bg-retro-gold text-gray-900'
+                ? 'bg-amber-600 text-white'
                 : tier.color === 'mid'
-                ? 'bg-retro-orange text-gray-900'
-                : 'bg-retro-red text-white'
+                ? 'bg-orange-600 text-white'
+                : 'bg-red-600 text-white'
             }`}
           >
             {tier.label}
@@ -114,15 +114,15 @@ export function BondLevelBar() {
       <ContinuousGauge value={bondLevel} />
 
       {/* Level markers */}
-      <div className="flex justify-between font-retro text-sm text-gray-600 px-1">
+      <div className="flex justify-between font-retro text-sm text-gray-700 px-1">
         <span>0</span>
-        <span className={bondLevel >= 30 ? 'text-retro-orange font-bold' : ''}>
+        <span className={bondLevel >= 30 ? 'text-orange-700 font-bold' : ''}>
           30
         </span>
-        <span className={bondLevel >= 60 ? 'text-retro-gold font-bold' : ''}>
+        <span className={bondLevel >= 60 ? 'text-amber-700 font-bold' : ''}>
           60
         </span>
-        <span className={bondLevel >= 90 ? 'text-retro-pink font-bold' : ''}>
+        <span className={bondLevel >= 90 ? 'text-pink-600 font-bold' : ''}>
           90
         </span>
         <span>100</span>

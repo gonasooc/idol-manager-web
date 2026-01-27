@@ -102,10 +102,10 @@ function RetroSliderGauge({
 
       {/* Labels */}
       <div className="flex justify-between font-retro text-sm">
-        <span className={!isPositive && intensity > 50 ? negativeColor + ' font-bold' : 'text-gray-500'}>
+        <span className={!isPositive && intensity > 50 ? negativeColor + ' font-bold' : 'text-gray-700'}>
           {negativeLabel}
         </span>
-        <span className={isPositive && intensity > 50 ? positiveColor + ' font-bold' : 'text-gray-500'}>
+        <span className={isPositive && intensity > 50 ? positiveColor + ' font-bold' : 'text-gray-700'}>
           {positiveLabel}
         </span>
       </div>

@@ -30,7 +30,7 @@ function RetroStatBar({
   return (
     <div className="space-y-1">
       <div className="flex justify-between items-center">
-        <span className="font-pixel text-xs text-gray-300">{label}</span>
+        <span className="font-pixel text-xs text-gray-700">{label}</span>
         <span className="font-pixel text-xs" style={{ color }}>
           {showSign && value > 0 ? '+' : ''}{value}
         </span>
@@ -99,7 +99,7 @@ export function ResultScreen({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="font-retro text-xl text-gray-600"
+              className="font-retro text-xl text-gray-700"
             >
               {personaDescription}
             </motion.p>

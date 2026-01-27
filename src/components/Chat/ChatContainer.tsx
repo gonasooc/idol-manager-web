@@ -172,8 +172,8 @@ export function ChatContainer() {
         {messages.length === 0 && (
           <div className="text-center py-12">
             <div className="text-6xl mb-4 animate-pixel-bounce">{currentPersona.emoji}</div>
-            <p className="font-pixel text-sm text-gray-800 mb-2">{currentPersona.title}</p>
-            <p className="font-retro text-xl text-gray-600">{currentPersona.description}</p>
+            <p className="font-pixel text-sm text-gray-900 mb-2">{currentPersona.title}</p>
+            <p className="font-retro text-xl text-gray-700">{currentPersona.description}</p>
             <div className="mt-6 p-4 border-2 border-dashed border-retro-teal bg-retro-teal/10">
               <p className="font-retro text-lg text-gray-700 blink-cursor">
                 대화를 시작하려면 메시지를 보내세요
