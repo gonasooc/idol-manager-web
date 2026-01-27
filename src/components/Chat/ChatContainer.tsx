@@ -15,7 +15,6 @@ import {
   updatePersonalityAtom,
 } from '../../store/atoms';
 import { sendChatMessageStream, checkHealth } from '../../services/api';
-import { sendMessage as sendMockMessage } from '../../services/mockChatApi';
 import { MessageBubble } from './MessageBubble';
 import { TypingIndicator } from './TypingIndicator';
 import { ChatInput } from './ChatInput';
@@ -59,6 +58,11 @@ export function ChatContainer() {
   }, []);
 
   const handleSendMessage = async (content: string) => {
+    // Check if online
+    if (!isOnline) {
+      return; // 오프라인이면 메시지 전송 불가
+    }
+
     // Add user message
     addMessage({
       role: 'user',
@@ -84,129 +88,67 @@ export function ChatContainer() {
     setMessages((prev) => [...prev, newIdolMessage]);
 
     try {
-      // Online: use streaming API
-      if (isOnline) {
-        try {
-          await sendChatMessageStream(
-            {
-              message: content,
-              stats: {
-                bondLevel,
-                kindness: personalityScore.kindness,
-                confidence: personalityScore.confidence,
-              },
-              persona: currentPersona.type,
-            },
-            // onChunk: append text to message
-            (chunk: string) => {
-              appendMessageContent({
-                id: idolMessageId,
-                chunk: chunk,
-                isStreaming: true,
-              });
-            },
-            // onComplete: apply stat changes and mark streaming complete
-            (statChanges) => {
-              // Mark streaming as complete and save statChanges to message
-              appendMessageContent({
-                id: idolMessageId,
-                chunk: '',
-                isStreaming: false,
-                statChanges,
-              });
-
-              // Apply stat changes
-              if (statChanges.bond !== undefined) {
-                updateBond(statChanges.bond);
-              }
-              if (
-                statChanges.kindness !== undefined ||
-                statChanges.confidence !== undefined
-              ) {
-                updatePersonality({
-                  kindness: statChanges.kindness,
-                  confidence: statChanges.confidence,
-                });
-              }
-            },
-            // onError: handle streaming errors
-            (error) => {
-              console.error('Stream error:', error);
-              updateMessageContent({
-                id: idolMessageId,
-                content: 'ERROR: Streaming failed...',
-                isStreaming: false,
-              });
-            }
-          );
-        } catch (apiError) {
-          console.error('Backend streaming failed, falling back to Mock API:', apiError);
-          setIsOnline(false);
-
-          // Fallback to mock API
-          const result = await sendMockMessage(content, {
+      await sendChatMessageStream(
+        {
+          message: content,
+          stats: {
             bondLevel,
-            personalityScore,
-            currentPersona,
-          });
-
-          updateMessageContent({
+            kindness: personalityScore.kindness,
+            confidence: personalityScore.confidence,
+          },
+          persona: currentPersona.type,
+        },
+        // onChunk: append text to message
+        (chunk: string) => {
+          appendMessageContent({
             id: idolMessageId,
-            content: result.response,
+            chunk: chunk,
+            isStreaming: true,
+          });
+        },
+        // onComplete: apply stat changes and mark streaming complete
+        (statChanges) => {
+          // Mark streaming as complete and save statChanges to message
+          appendMessageContent({
+            id: idolMessageId,
+            chunk: '',
             isStreaming: false,
-            statChanges: result.statChanges,
+            statChanges,
           });
 
           // Apply stat changes
-          if (result.statChanges.bond !== undefined) {
-            updateBond(result.statChanges.bond);
+          if (statChanges.bond !== undefined) {
+            updateBond(statChanges.bond);
           }
           if (
-            result.statChanges.kindness !== undefined ||
-            result.statChanges.confidence !== undefined
+            statChanges.kindness !== undefined ||
+            statChanges.confidence !== undefined
           ) {
             updatePersonality({
-              kindness: result.statChanges.kindness,
-              confidence: result.statChanges.confidence,
+              kindness: statChanges.kindness,
+              confidence: statChanges.confidence,
             });
           }
-        }
-      } else {
-        // Offline: use Mock API
-        const result = await sendMockMessage(content, {
-          bondLevel,
-          personalityScore,
-          currentPersona,
-        });
-
-        updateMessageContent({
-          id: idolMessageId,
-          content: result.response,
-          isStreaming: false,
-          statChanges: result.statChanges,
-        });
-
-        // Apply stat changes
-        if (result.statChanges.bond !== undefined) {
-          updateBond(result.statChanges.bond);
-        }
-        if (
-          result.statChanges.kindness !== undefined ||
-          result.statChanges.confidence !== undefined
-        ) {
-          updatePersonality({
-            kindness: result.statChanges.kindness,
-            confidence: result.statChanges.confidence,
+        },
+        // onError: handle streaming errors
+        (error) => {
+          console.error('Stream error:', error);
+          updateMessageContent({
+            id: idolMessageId,
+            content: '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.',
+            isStreaming: false,
           });
+          setIsOnline(false);
         }
-      }
+      );
     } catch (error) {
       console.error('Message send failed:', error);
       updateMessageContent({
         id: idolMessageId,
-        content: 'ERROR: Communication failed...',
+        content: '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.',
         isStreaming: false,
       });
+      setIsOnline(false);
     } finally {
       setIsTyping(false);
     }
@@ -249,8 +191,17 @@ export function ChatContainer() {
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Offline Warning */}
+      {isOnline === false && (
+        <div className="px-4 py-2 bg-red-100 border-t-2 border-red-400">
+          <p className="font-retro text-sm text-red-700 text-center">
+            서버에 연결할 수 없습니다. 백엔드 서버를 확인해주세요.
+          </p>
+        </div>
+      )}
+
       {/* Chat Input */}
-      <ChatInput onSend={handleSendMessage} disabled={isTyping} />
+      <ChatInput onSend={handleSendMessage} disabled={isTyping || isOnline === false} />
     </div>
   );
 }
