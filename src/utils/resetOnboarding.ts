@@ -8,7 +8,10 @@ export function resetOnboarding() {
   localStorage.removeItem('idol-personality-score');
   localStorage.removeItem('idol-messages');
   localStorage.removeItem('idol-history');
-  window.location.href = '/';
+  
+  // GitHub Pages 프로덕션에서는 /idol-manager-web/, 개발에서는 /
+  const basePath = import.meta.env.PROD ? '/idol-manager-web/' : '/';
+  window.location.href = basePath;
 }
 
 // Make it available in browser console for easy testing
