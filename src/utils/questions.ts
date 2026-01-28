@@ -18,11 +18,11 @@ export const questions: Question[] = [
     options: [
       {
         text: '혹독하게',
-        weights: { kindness: -10, confidence: 5 },
+        weights: { kindness: -15, confidence: 5, bondLevel: -5 },
       },
       {
         text: '따뜻하게',
-        weights: { kindness: 10, confidence: -5 },
+        weights: { kindness: 10, confidence: -5, bondLevel: 3 },
       },
       {
         text: '균형있게',
@@ -36,15 +36,15 @@ export const questions: Question[] = [
     options: [
       {
         text: '엄하게 지적',
-        weights: { kindness: -8, confidence: 3 },
+        weights: { kindness: -12, confidence: 3, bondLevel: -3 },
       },
       {
         text: '격려하며 알려주기',
-        weights: { kindness: 8, bondLevel: 5 },
+        weights: { kindness: 8, bondLevel: 3 },
       },
       {
         text: '스스로 깨닫게',
-        weights: { confidence: 5 },
+        weights: { confidence: 3 },
       },
     ],
   },
@@ -54,15 +54,15 @@ export const questions: Question[] = [
     options: [
       {
         text: '빡빡하게',
-        weights: { kindness: -5, confidence: 8 },
+        weights: { kindness: -8, confidence: 5, bondLevel: -2 },
       },
       {
         text: '여유있게',
-        weights: { kindness: 5, confidence: -3 },
+        weights: { kindness: 5, confidence: -3, bondLevel: 2 },
       },
       {
         text: '상황에 따라',
-        weights: { kindness: 3, confidence: 3 },
+        weights: { kindness: 2, confidence: 2 },
       },
     ],
   },
@@ -72,15 +72,15 @@ export const questions: Question[] = [
     options: [
       {
         text: '자주 칭찬',
-        weights: { kindness: 10, bondLevel: 8 },
+        weights: { kindness: 8, bondLevel: 5 },
       },
       {
         text: '가끔 칭찬',
-        weights: { kindness: 3, bondLevel: 3 },
+        weights: { kindness: 2, bondLevel: 1 },
       },
       {
         text: '성과 있을 때만',
-        weights: { kindness: -5, confidence: 5 },
+        weights: { kindness: -8, confidence: 3, bondLevel: -2 },
       },
     ],
   },
@@ -90,15 +90,15 @@ export const questions: Question[] = [
     options: [
       {
         text: '높은 목표',
-        weights: { confidence: 10, kindness: -3 },
+        weights: { confidence: 5, kindness: -5, bondLevel: -2 },
       },
       {
         text: '현실적 목표',
-        weights: { kindness: 5, confidence: 5 },
+        weights: { kindness: 3, confidence: 3 },
       },
       {
         text: '본인이 정하게',
-        weights: { kindness: 8, confidence: -5 },
+        weights: { kindness: 5, confidence: -3, bondLevel: 2 },
       },
     ],
   },
@@ -108,15 +108,15 @@ export const questions: Question[] = [
     options: [
       {
         text: '자주 비교',
-        weights: { kindness: -10, confidence: 8 },
+        weights: { kindness: -15, confidence: 5, bondLevel: -5 },
       },
       {
         text: '비교 안함',
-        weights: { kindness: 10, bondLevel: 5 },
+        weights: { kindness: 8, bondLevel: 3 },
       },
       {
         text: '가끔',
-        weights: { kindness: 0, confidence: 3 },
+        weights: { kindness: -3, confidence: 2 },
       },
     ],
   },
@@ -126,15 +126,15 @@ export const questions: Question[] = [
     options: [
       {
         text: '최소한',
-        weights: { kindness: -8, confidence: 5 },
+        weights: { kindness: -12, confidence: 3, bondLevel: -3 },
       },
       {
         text: '충분히',
-        weights: { kindness: 10, bondLevel: 8 },
+        weights: { kindness: 8, bondLevel: 5 },
       },
       {
         text: '본인 재량',
-        weights: { kindness: 5, confidence: 3 },
+        weights: { kindness: 3, confidence: 2, bondLevel: 1 },
       },
     ],
   },
@@ -144,15 +144,15 @@ export const questions: Question[] = [
     options: [
       {
         text: '직설적',
-        weights: { kindness: -5, confidence: 8 },
+        weights: { kindness: -8, confidence: 5, bondLevel: -2 },
       },
       {
         text: '부드럽게',
-        weights: { kindness: 10, bondLevel: 5 },
+        weights: { kindness: 8, bondLevel: 3 },
       },
       {
         text: '질문으로 유도',
-        weights: { kindness: 5, confidence: 5 },
+        weights: { kindness: 3, confidence: 3, bondLevel: 1 },
       },
     ],
   },
@@ -162,15 +162,15 @@ export const questions: Question[] = [
     options: [
       {
         text: '다시 도전',
-        weights: { confidence: 8, kindness: -3 },
+        weights: { confidence: 5, kindness: -5, bondLevel: -2 },
       },
       {
         text: '위로 먼저',
-        weights: { kindness: 10, bondLevel: 8 },
+        weights: { kindness: 8, bondLevel: 5 },
       },
       {
         text: '분석 후 재시도',
-        weights: { confidence: 5, kindness: 3 },
+        weights: { confidence: 3, kindness: 2 },
       },
     ],
   },
@@ -180,15 +180,15 @@ export const questions: Question[] = [
     options: [
       {
         text: '최대한 빠르게',
-        weights: { kindness: -5, confidence: 10 },
+        weights: { kindness: -8, confidence: 5, bondLevel: -3 },
       },
       {
         text: '준비되면',
-        weights: { kindness: 5, confidence: 5 },
+        weights: { kindness: 3, confidence: 3 },
       },
       {
         text: '여유있게',
-        weights: { kindness: 8, confidence: -5 },
+        weights: { kindness: 5, confidence: -3, bondLevel: 2 },
       },
     ],
   },

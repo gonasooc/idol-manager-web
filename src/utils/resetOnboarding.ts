@@ -6,6 +6,8 @@ export function resetOnboarding() {
   localStorage.removeItem('idol-onboarding-completed');
   localStorage.removeItem('idol-bond-level');
   localStorage.removeItem('idol-personality-score');
+  localStorage.removeItem('idol-messages');
+  localStorage.removeItem('idol-history');
   window.location.href = '/';
 }
 
