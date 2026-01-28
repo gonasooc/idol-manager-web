@@ -33,8 +33,11 @@ function App() {
     }
   }, [atomOnboardingCompleted]);
 
+  // GitHub Pages 배포 시 basename 설정
+  const basename = import.meta.env.PROD ? '/idol-manager-web' : '/';
+
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route
           path="/"
