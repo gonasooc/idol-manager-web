@@ -34,8 +34,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      # SPA 새로고침 지원: 404.html을 index.html과 동일하게 생성
+      - name: Copy index.html to 404.html
+        run: cp ./dist/index.html ./dist/404.html
+
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
