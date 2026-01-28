@@ -18,6 +18,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,6 +34,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
 
       # SPA 새로고침 지원: 404.html을 index.html과 동일하게 생성
       - name: Copy index.html to 404.html
