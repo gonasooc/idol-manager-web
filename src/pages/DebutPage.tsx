@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useAtomValue } from 'jotai';
 import { motion } from 'framer-motion';
-import { bondLevelAtom, personalityScoreAtom, currentPersonaAtom } from '../store/atoms';
-import { DebutCardModal } from '../components/DebutCard';
+import { bondLevelAtom, personalityScoreAtom, currentPersonaAtom } from '@/store/atoms';
+import { DebutCardModal } from '@/components/DebutCard';
+import { resetOnboarding } from '@/utils/resetOnboarding';
 
 export function DebutPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -95,6 +96,19 @@ export function DebutPage() {
             className="retro-btn retro-btn-primary w-full py-4"
           >
             카드 생성
+          </motion.button>
+
+          {/* Reset Button */}
+          <motion.button
+            whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              if (window.confirm('모든 데이터가 초기화됩니다. 새 아이돌을 육성하시겠습니까?')) {
+                resetOnboarding();
+              }
+            }}
+            className="retro-btn w-full py-3 mt-3 text-gray-500 hover:text-gray-700 border-gray-400"
+          >
+            새 아이돌 육성하기
           </motion.button>
         </div>
       </motion.div>

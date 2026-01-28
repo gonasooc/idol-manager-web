@@ -6,19 +6,19 @@ import {
   addMessageAtom,
   updateMessageContentAtom,
   appendMessageContentAtom,
-} from '../../store/chatAtoms';
+} from '@/store/chatAtoms';
 import {
   bondLevelAtom,
   personalityScoreAtom,
   currentPersonaAtom,
   updateBondLevelAtom,
   updatePersonalityAtom,
-} from '../../store/atoms';
-import { sendChatMessageStream, checkHealth } from '../../services/api';
+} from '@/store/atoms';
+import { sendChatMessageStream, checkHealth } from '@/services/api';
 import { MessageBubble } from './MessageBubble';
 import { TypingIndicator } from './TypingIndicator';
 import { ChatInput } from './ChatInput';
-import { ConnectionStatus } from '../UI/ConnectionStatus';
+import { ConnectionStatus } from '@/components/UI/ConnectionStatus';
 
 export function ChatContainer() {
   const [messages, setMessages] = useAtom(messagesAtom);

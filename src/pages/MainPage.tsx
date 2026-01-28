@@ -1,6 +1,6 @@
-import { StatsBar } from '../components/StatsBar';
-import { StatChangeAnimation } from '../components/StatChangeAnimation';
-import { ChatContainer } from '../components/Chat';
+import { StatsBar } from '@/components/StatsBar';
+import { StatChangeAnimation } from '@/components/StatChangeAnimation';
+import { ChatContainer } from '@/components/Chat';
 
 export function MainPage() {
   return (

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import type { PersonaInfo } from '../../types';
+import type { PersonaInfo } from '@/types';
 
 interface DebutCardProps {
   idolName: string;

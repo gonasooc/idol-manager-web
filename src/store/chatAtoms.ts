@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
-import type { Message } from '../types';
+import type { Message } from '@/types';
 
 // 메시지 히스토리 - localStorage에 자동 저장
 export const messagesAtom = atomWithStorage<Message[]>('idol-messages', []);

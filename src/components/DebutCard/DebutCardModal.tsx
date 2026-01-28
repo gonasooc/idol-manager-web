@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import html2canvas from 'html2canvas';
 import { DebutCard } from './DebutCard';
-import type { PersonaInfo } from '../../types';
+import type { PersonaInfo } from '@/types';
 
 interface DebutCardModalProps {
   isOpen: boolean;

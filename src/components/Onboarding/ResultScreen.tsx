@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import type { InitialStats } from '../../utils/calculateInitialStats';
+import type { InitialStats } from '@/utils/calculateInitialStats';
 
 interface ResultScreenProps {
   stats: InitialStats;

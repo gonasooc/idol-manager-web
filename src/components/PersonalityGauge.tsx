@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai';
-import { personalityScoreAtom } from '../store/atoms';
+import { personalityScoreAtom } from '@/store/atoms';
 import { motion } from 'framer-motion';
 
 interface GaugeProps {

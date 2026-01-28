@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
-import type { PersonalityScore, PersonaInfo, PersonaType, StatChange } from '../types';
-import { addStatSnapshotAtom } from './historyAtoms';
+import type { PersonalityScore, PersonaInfo, PersonaType, StatChange } from '@/types';
+import { addStatSnapshotAtom } from '@/store/historyAtoms';
 
 // 온보딩 완료 여부 - localStorage에 자동 저장
 export const onboardingCompletedAtom = atomWithStorage<boolean>('idol-onboarding-completed', false);

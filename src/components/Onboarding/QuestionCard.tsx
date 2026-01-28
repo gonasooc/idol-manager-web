@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import type { Question } from '../../utils/questions';
+import type { Question } from '@/utils/questions';
 
 interface QuestionCardProps {
   question: Question;

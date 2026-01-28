@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAtomValue } from 'jotai';
-import { statChangeLogAtom } from '../store/atoms';
+import { statChangeLogAtom } from '@/store/atoms';
 
 const STAT_LABELS = {
   bond: '<3',

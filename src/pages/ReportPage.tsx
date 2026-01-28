@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
-import { statHistoryAtom, historyStatsAtom } from '../store/historyAtoms';
-import { bondLevelAtom, personalityScoreAtom, currentPersonaAtom } from '../store/atoms';
+import { statHistoryAtom, historyStatsAtom } from '@/store/historyAtoms';
+import { bondLevelAtom, personalityScoreAtom, currentPersonaAtom } from '@/store/atoms';
 import { motion } from 'framer-motion';
 
 const PERSONA_MAP: Record<string, { title: string; emoji: string; color: string }> = {

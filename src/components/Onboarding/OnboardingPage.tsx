@@ -1,19 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSetAtom } from 'jotai';
+import { useSetAtom, useAtomValue } from 'jotai';
 import { AnimatePresence, motion } from 'framer-motion';
-import { questions } from '../../utils/questions';
-import { calculateInitialStats } from '../../utils/calculateInitialStats';
+import { questions } from '@/utils/questions';
+import { calculateInitialStats } from '@/utils/calculateInitialStats';
 import {
   bondLevelAtom,
   personalityScoreAtom,
   onboardingCompletedAtom,
   currentPersonaAtom,
-} from '../../store/atoms';
+} from '@/store/atoms';
 import { ProgressBar } from './ProgressBar';
 import { QuestionCard } from './QuestionCard';
 import { ResultScreen } from './ResultScreen';
-import { useAtomValue } from 'jotai';
 
 export function OnboardingPage() {
   const navigate = useNavigate();

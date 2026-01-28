@@ -1,4 +1,4 @@
-import type { PersonaType } from '../types';
+import type { PersonaType } from '@/types';
 
 // 친밀도 구간별 말투 레벨
 type SpeechLevel = 'distant' | 'casual' | 'friendly';
