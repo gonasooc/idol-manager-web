@@ -138,7 +138,7 @@ export function ResultScreen({
           {/* Decorative message */}
           <div className="text-center mb-6 p-3 border-2 border-dashed border-retro-gold bg-retro-gold/10">
             <span className="font-retro text-lg text-gray-700">
-              프로듀서 프로필이 준비되었습니다!
+              연습생 프로필이 완성되었습니다!
             </span>
           </div>
 
