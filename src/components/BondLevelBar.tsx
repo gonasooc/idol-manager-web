@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai';
-import { bondLevelAtom } from '../store/atoms';
+import { bondLevelAtom } from '@/store/atoms';
 import { motion } from 'framer-motion';
 
 // Pixel Heart Component

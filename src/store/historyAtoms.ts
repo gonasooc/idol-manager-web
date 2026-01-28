@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
-import type { PersonaType } from '../types';
+import type { PersonaType } from '@/types';
 
 export interface StatSnapshot {
   timestamp: number;

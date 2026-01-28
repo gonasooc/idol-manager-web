@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import type { Message } from '../../types';
+import type { Message } from '@/types';
 import { useAtomValue } from 'jotai';
-import { currentPersonaAtom } from '../../store/atoms';
+import { currentPersonaAtom } from '@/store/atoms';
 
 interface MessageBubbleProps {
   message: Message;

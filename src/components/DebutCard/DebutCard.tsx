@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import type { PersonaInfo } from '../../types';
+import type { PersonaInfo } from '@/types';
 
 interface DebutCardProps {
   idolName: string;
@@ -67,7 +67,7 @@ export function DebutCard({ idolName, bondLevel, kindness, confidence, persona }
         }}
       >
         {/* Inner card */}
-        <div className="h-full bg-retro-blue-dark border-4 border-gray-800 flex flex-col p-4 relative overflow-hidden">
+        <div className="h-full border-4 border-gray-800 flex flex-col p-4 relative overflow-hidden" style={{ backgroundColor: '#1a1a4e' }}>
           {/* Scanline effect */}
           <div className="absolute inset-0 pointer-events-none opacity-10">
             {Array.from({ length: 50 }).map((_, i) => (
@@ -101,14 +101,14 @@ export function DebutCard({ idolName, bondLevel, kindness, confidence, persona }
           </div>
 
           {/* Stats Section */}
-          <div className="flex-1 flex flex-col justify-center space-y-3 bg-black/50 p-4 border-2 border-gray-700">
+          <div className="flex-1 flex flex-col justify-center space-y-3 p-4 border-2 border-gray-700" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
             {/* Bond Level */}
             <div>
               <div className="flex justify-between items-center mb-1">
-                <span className="font-pixel text-xs text-gray-400">&lt;3 친밀도</span>
-                <span className="font-pixel text-xs text-retro-pink">{bondLevel}</span>
+                <span className="font-pixel text-xs" style={{ color: '#9ca3af' }}>♥ 친밀도</span>
+                <span className="font-pixel text-xs" style={{ color: '#ff69b4' }}>{bondLevel}</span>
               </div>
-              <div className="font-retro text-lg text-retro-pink tracking-widest">
+              <div className="font-retro text-lg tracking-widest" style={{ color: '#ff69b4' }}>
                 [{getStatBar(bondLevel)}]
               </div>
             </div>
@@ -116,10 +116,10 @@ export function DebutCard({ idolName, bondLevel, kindness, confidence, persona }
             {/* Kindness */}
             <div>
               <div className="flex justify-between items-center mb-1">
-                <span className="font-pixel text-xs text-gray-400">:) 상냥함</span>
-                <span className="font-pixel text-xs text-retro-gold">{kindnessDisplay}</span>
+                <span className="font-pixel text-xs" style={{ color: '#9ca3af' }}>♡ 상냥함</span>
+                <span className="font-pixel text-xs" style={{ color: '#ffd700' }}>{kindnessDisplay}</span>
               </div>
-              <div className="font-retro text-lg text-retro-gold tracking-widest">
+              <div className="font-retro text-lg tracking-widest" style={{ color: '#ffd700' }}>
                 [{getStatBar(kindnessDisplay)}]
               </div>
             </div>
@@ -127,10 +127,10 @@ export function DebutCard({ idolName, bondLevel, kindness, confidence, persona }
             {/* Confidence */}
             <div>
               <div className="flex justify-between items-center mb-1">
-                <span className="font-pixel text-xs text-gray-400">!! 자신감</span>
-                <span className="font-pixel text-xs text-retro-teal">{confidenceDisplay}</span>
+                <span className="font-pixel text-xs" style={{ color: '#9ca3af' }}>★ 자신감</span>
+                <span className="font-pixel text-xs" style={{ color: '#40e0d0' }}>{confidenceDisplay}</span>
               </div>
-              <div className="font-retro text-lg text-retro-teal tracking-widest">
+              <div className="font-retro text-lg tracking-widest" style={{ color: '#40e0d0' }}>
                 [{getStatBar(confidenceDisplay)}]
               </div>
             </div>
@@ -144,7 +144,7 @@ export function DebutCard({ idolName, bondLevel, kindness, confidence, persona }
             >
               {stars} {title} {stars}
             </div>
-            <div className="font-retro text-lg text-gray-500">
+            <div className="font-retro text-lg" style={{ color: '#6b7280' }}>
               {new Date().toLocaleDateString('ko-KR', {
                 year: 'numeric',
                 month: '2-digit',

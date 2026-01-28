@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useAtomValue } from 'jotai';
-import { currentPersonaAtom } from '../../store/atoms';
+import { currentPersonaAtom } from '@/store/atoms';
 
 export function TypingIndicator() {
   const persona = useAtomValue(currentPersonaAtom);

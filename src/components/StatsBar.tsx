@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useAtomValue } from 'jotai';
-import { currentPersonaAtom, bondLevelAtom } from '../store/atoms';
-import { BondLevelBar } from './BondLevelBar';
-import { PersonalityGauge } from './PersonalityGauge';
+import { currentPersonaAtom, bondLevelAtom } from '@/store/atoms';
+import { BondLevelBar } from '@/components/BondLevelBar';
+import { PersonalityGauge } from '@/components/PersonalityGauge';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function StatsBar() {

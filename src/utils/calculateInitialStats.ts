@@ -25,9 +25,11 @@ export function calculateInitialStats(answers: number[][], questions: Question[]
   });
 
   // 초기값 설정 (bondLevel은 0~100, kindness/confidence는 -100~100)
-  const bondLevel = Math.max(0, Math.min(100, 50 + totalWeights.bondLevel));
-  const kindness = Math.max(-100, Math.min(100, totalWeights.kindness));
-  const confidence = Math.max(-100, Math.min(100, totalWeights.confidence));
+  // 모든 스탯을 낮게 시작해서 성장하는 느낌을 줌
+  // bondLevel 기본값 20, kindness/confidence 기본값 -30
+  const bondLevel = Math.max(0, Math.min(100, 20 + totalWeights.bondLevel));
+  const kindness = Math.max(-100, Math.min(100, -30 + totalWeights.kindness));
+  const confidence = Math.max(-100, Math.min(100, -30 + totalWeights.confidence));
 
   return {
     bondLevel,

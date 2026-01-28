@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
-import { statHistoryAtom, historyStatsAtom } from '../store/historyAtoms';
-import { bondLevelAtom, personalityScoreAtom, currentPersonaAtom } from '../store/atoms';
+import { statHistoryAtom, historyStatsAtom } from '@/store/historyAtoms';
+import { bondLevelAtom, personalityScoreAtom, currentPersonaAtom } from '@/store/atoms';
 import { motion } from 'framer-motion';
 
 const PERSONA_MAP: Record<string, { title: string; emoji: string; color: string }> = {
@@ -129,19 +129,19 @@ export function ReportPage() {
                 color="#ff69b4"
               />
               <RetroStatBox
-                icon="<3"
+                icon="♥"
                 label="친밀도"
                 value={bondLevel}
                 color="#ff6b6b"
               />
               <RetroStatBox
-                icon=":)"
+                icon="♡"
                 label="상냥함"
                 value={`${personality.kindness > 0 ? '+' : ''}${personality.kindness}`}
                 color="#ffd700"
               />
               <RetroStatBox
-                icon="!!"
+                icon="★"
                 label="자신감"
                 value={`${personality.confidence > 0 ? '+' : ''}${personality.confidence}`}
                 color="#40e0d0"

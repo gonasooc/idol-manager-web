@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import type { InitialStats } from '../../utils/calculateInitialStats';
+import type { InitialStats } from '@/utils/calculateInitialStats';
+import { RetroSliderGauge } from '@/components/PersonalityGauge';
 
 interface ResultScreenProps {
   stats: InitialStats;
@@ -118,27 +119,29 @@ export function ResultScreen({
               color="#ff69b4"
             />
 
-            <RetroStatBar
-              label="상냥함"
+            <RetroSliderGauge
+              label="감정"
               value={stats.kindness}
-              maxValue={200}
-              color="#ffd700"
-              showSign
+              negativeLabel="차가움"
+              positiveLabel="따뜻함"
+              negativeColor="text-retro-blue"
+              positiveColor="text-retro-pink"
             />
 
-            <RetroStatBar
-              label="자신감"
+            <RetroSliderGauge
+              label="태도"
               value={stats.confidence}
-              maxValue={200}
-              color="#40e0d0"
-              showSign
+              negativeLabel="소심함"
+              positiveLabel="대담함"
+              negativeColor="text-retro-green"
+              positiveColor="text-retro-orange"
             />
           </div>
 
           {/* Decorative message */}
           <div className="text-center mb-6 p-3 border-2 border-dashed border-retro-gold bg-retro-gold/10">
             <span className="font-retro text-lg text-gray-700">
-              프로듀서 프로필이 준비되었습니다!
+              연습생 프로필이 완성되었습니다!
             </span>
           </div>
 

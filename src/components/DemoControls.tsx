@@ -1,5 +1,5 @@
 import { useSetAtom } from 'jotai';
-import { updateBondLevelAtom, updatePersonalityAtom } from '../store/atoms';
+import { updateBondLevelAtom, updatePersonalityAtom } from '@/store/atoms';
 
 export function DemoControls() {
   const updateBondLevel = useSetAtom(updateBondLevelAtom);

@@ -1,19 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSetAtom } from 'jotai';
+import { useSetAtom, useAtomValue } from 'jotai';
 import { AnimatePresence, motion } from 'framer-motion';
-import { questions } from '../../utils/questions';
-import { calculateInitialStats } from '../../utils/calculateInitialStats';
+import { questions } from '@/utils/questions';
+import { calculateInitialStats } from '@/utils/calculateInitialStats';
 import {
   bondLevelAtom,
   personalityScoreAtom,
   onboardingCompletedAtom,
   currentPersonaAtom,
-} from '../../store/atoms';
+} from '@/store/atoms';
 import { ProgressBar } from './ProgressBar';
 import { QuestionCard } from './QuestionCard';
 import { ResultScreen } from './ResultScreen';
-import { useAtomValue } from 'jotai';
 
 export function OnboardingPage() {
   const navigate = useNavigate();
@@ -89,7 +88,7 @@ export function OnboardingPage() {
               IDOL MANAGER
             </h1>
             <p className="font-retro text-xl text-gray-600">
-              당신의 프로듀싱 스타일을 알려주세요
+              당신이 맡을 연습생을 알아봅시다
             </p>
           </div>
         </motion.div>
