@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background with Windows 95 style border -->
+  <rect x="0" y="0" width="512" height="512" fill="#c0c0c0"/>
+  <rect x="4" y="4" width="504" height="504" fill="#ffffff"/>
+  <rect x="8" y="8" width="496" height="496" fill="#808080"/>
+  <rect x="16" y="16" width="480" height="480" fill="#1a1a4e"/>
+
+  <!-- Gold Star -->
+  <polygon
+    points="256,80 295,180 400,180 315,245 345,355 256,290 167,355 197,245 112,180 217,180"
+    fill="#ffd700"
+    stroke="#cc9900"
+    stroke-width="4"
+  />
+
+  <!-- Inner pink star accent -->
+  <polygon
+    points="256,130 280,195 350,195 295,235 315,305 256,265 197,305 217,235 162,195 232,195"
+    fill="#ff69b4"
+    opacity="0.8"
+  />
+</svg>
