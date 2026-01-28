@@ -11,7 +11,7 @@ interface GaugeProps {
   positiveColor: string;
 }
 
-function RetroSliderGauge({
+export function RetroSliderGauge({
   label,
   value,
   negativeLabel,

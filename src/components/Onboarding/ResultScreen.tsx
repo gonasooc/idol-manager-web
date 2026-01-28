@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import type { InitialStats } from '@/utils/calculateInitialStats';
+import { RetroSliderGauge } from '@/components/PersonalityGauge';
 
 interface ResultScreenProps {
   stats: InitialStats;
@@ -118,20 +119,22 @@ export function ResultScreen({
               color="#ff69b4"
             />
 
-            <RetroStatBar
-              label="상냥함"
+            <RetroSliderGauge
+              label="감정"
               value={stats.kindness}
-              maxValue={200}
-              color="#ffd700"
-              showSign
+              negativeLabel="차가움"
+              positiveLabel="따뜻함"
+              negativeColor="text-retro-blue"
+              positiveColor="text-retro-pink"
             />
 
-            <RetroStatBar
-              label="자신감"
+            <RetroSliderGauge
+              label="태도"
               value={stats.confidence}
-              maxValue={200}
-              color="#40e0d0"
-              showSign
+              negativeLabel="소심함"
+              positiveLabel="대담함"
+              negativeColor="text-retro-green"
+              positiveColor="text-retro-orange"
             />
           </div>
 

@@ -3,9 +3,9 @@ import { useAtomValue } from 'jotai';
 import { statChangeLogAtom } from '@/store/atoms';
 
 const STAT_LABELS = {
-  bond: '<3',
-  kindness: ':)',
-  confidence: '!!',
+  bond: '친밀',
+  kindness: '상냥',
+  confidence: '자신감',
 } as const;
 
 const STAT_COLORS = {
