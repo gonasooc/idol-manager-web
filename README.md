@@ -115,13 +115,15 @@ npm run dev
 
 | 영역 | 기술 |
 |------|------|
-| **프레임워크** | React 19 + TypeScript |
-| **빌드** | Vite |
-| **상태 관리** | Jotai (localStorage 자동 저장) |
-| **스타일링** | Tailwind CSS |
-| **애니메이션** | Framer Motion |
-| **차트** | Recharts |
-| **라우팅** | React Router v7 |
+| **프레임워크** | React 19.2 + TypeScript 5.9 |
+| **빌드** | Vite 7.2 |
+| **상태 관리** | Jotai 2.16 (localStorage 자동 저장) |
+| **스타일링** | Tailwind CSS 4.1 |
+| **애니메이션** | Framer Motion 12.29 |
+| **차트** | Recharts 3.7 |
+| **라우팅** | React Router v7.12 |
+| **이미지 캡처** | html2canvas |
+| **UI 컴포넌트** | Radix UI (Progress, Slider) |
 | **백엔드** | FastAPI + Ollama (선택) |
 
 ---
@@ -131,30 +133,43 @@ npm run dev
 ```
 src/
 ├── components/
-│   ├── Onboarding/       # 온보딩 퀴즈
-│   ├── Chat/             # 채팅 UI
-│   ├── DebutCard/        # 데뷔 카드
-│   ├── UI/               # 공통 UI
-│   ├── StatsBar.tsx      # 스탯 대시보드
-│   ├── Navigation.tsx    # 하단 네비게이션
-│   └── ...
+│   ├── Onboarding/           # 온보딩 퀴즈
+│   │   ├── OnboardingPage.tsx
+│   │   ├── ProgressBar.tsx
+│   │   ├── QuestionCard.tsx
+│   │   └── ResultScreen.tsx
+│   ├── Chat/                 # 채팅 UI
+│   │   ├── ChatContainer.tsx
+│   │   ├── ChatInput.tsx
+│   │   ├── MessageBubble.tsx
+│   │   └── TypingIndicator.tsx
+│   ├── DebutCard/            # 데뷔 카드
+│   │   ├── DebutCard.tsx
+│   │   └── DebutCardModal.tsx
+│   ├── UI/                   # 공통 UI
+│   ├── StatsBar.tsx          # 스탯 대시보드
+│   ├── BondLevelBar.tsx      # 친밀도 게이지
+│   ├── PersonalityGauge.tsx  # 성격 게이지
+│   ├── StatChangeAnimation.tsx # 스탯 변화 애니메이션
+│   ├── DemoControls.tsx      # 데모 컨트롤
+│   └── Navigation.tsx        # 하단 네비게이션
 ├── pages/
-│   ├── MainPage.tsx      # 메인 (채팅)
-│   ├── ReportPage.tsx    # 성장 리포트
-│   └── DebutPage.tsx     # 데뷔 카드
+│   ├── MainPage.tsx          # 메인 (채팅)
+│   ├── ReportPage.tsx        # 성장 리포트
+│   └── DebutPage.tsx         # 데뷔 카드
 ├── services/
-│   ├── api.ts            # 백엔드 API
-│   └── mockChatApi.ts    # Mock API
+│   └── api.ts                # 백엔드 API (Mock 포함)
 ├── store/
-│   ├── atoms.ts          # Jotai 상태
-│   ├── chatAtoms.ts      # 채팅 상태
-│   └── historyAtoms.ts   # 히스토리
+│   ├── atoms.ts              # Jotai 상태
+│   ├── chatAtoms.ts          # 채팅 상태
+│   └── historyAtoms.ts       # 히스토리
 ├── utils/
-│   ├── questions.ts      # 퀴즈 질문
-│   ├── speechStyles.ts   # 말투 시스템
-│   └── ...
+│   ├── questions.ts          # 퀴즈 질문
+│   ├── speechStyles.ts       # 말투 시스템
+│   ├── calculateInitialStats.ts # 초기 스탯 계산
+│   └── resetOnboarding.ts    # 온보딩 리셋
 └── types/
-    └── index.ts          # 타입 정의
+    └── index.ts              # 타입 정의
 ```
 
 ---
@@ -211,6 +226,8 @@ location.reload()
 - **[아키텍처](docs/architecture.md)** - 시스템 설계, 상태 관리
 - **[기능 상세](docs/features.md)** - Phase별 기능 설명
 - **[개발 가이드](docs/development.md)** - 설정, 테스트, 배포
+- **[백엔드 연동](docs/BACKEND_INTEGRATION.md)** - 백엔드 API 연동 가이드
+- **[개발 계획](docs/PLAN.md)** - 프로젝트 로드맵
 
 ---
 
@@ -231,7 +248,6 @@ MIT License
 
 ---
 
-**버전**: v1.0 (Phase 1~5 완료)
 **상태**: MVP 완료
 **최종 업데이트**: 2026-01-26
 
