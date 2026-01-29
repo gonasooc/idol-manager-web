@@ -34,7 +34,7 @@ export function ProgressBar({ current, total }: ProgressBarProps) {
       {/* Loading text effect */}
       <div className="mt-2 text-center">
         <span className="font-retro text-lg text-gray-500">
-          프로듀서 데이터 로딩 중
+          연습생 프로필 분석 중
           <motion.span
             animate={{ opacity: [1, 0, 1] }}
             transition={{ duration: 1, repeat: Infinity }}

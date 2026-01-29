@@ -70,7 +70,7 @@ export function Navigation() {
         </div>
 
         {/* Bottom decorative border */}
-        <div className="h-1 bg-gradient-to-r from-retro-teal via-retro-pink to-retro-gold" />
+        <div className="h-1 bg-linear-to-r from-retro-teal via-retro-pink to-retro-gold" />
       </div>
     </nav>
   );

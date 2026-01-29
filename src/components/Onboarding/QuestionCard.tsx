@@ -44,7 +44,7 @@ export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
               >
                 <div className="flex items-start gap-3">
                   {/* Option number */}
-                  <span className="font-pixel text-xs text-retro-blue-dark bg-retro-gold px-2 py-1 flex-shrink-0">
+                  <span className="font-pixel text-xs text-retro-blue-dark bg-retro-gold px-2 py-1 shrink-0">
                     {index + 1}
                   </span>
                   {/* Option text */}

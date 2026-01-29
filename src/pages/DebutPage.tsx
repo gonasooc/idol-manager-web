@@ -36,7 +36,7 @@ export function DebutPage() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="inline-block mb-6"
           >
-            <div className="w-24 h-32 bg-gradient-to-br from-retro-gold via-retro-pink to-retro-teal border-4 border-gray-800 flex items-center justify-center shadow-pixel">
+            <div className="w-24 h-32 bg-linear-to-br from-retro-gold via-retro-pink to-retro-teal border-4 border-gray-800 flex items-center justify-center shadow-pixel">
               <span className="font-pixel text-2xl text-white">[*]</span>
             </div>
           </motion.div>
