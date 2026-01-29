@@ -57,7 +57,7 @@ export function StatsBar() {
                 key={persona.type}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="flex items-center gap-3 p-3 bg-gradient-to-r from-retro-teal/20 to-retro-cyan/20 border-2 border-dashed border-retro-teal"
+                className="flex items-center gap-3 p-3 bg-linear-to-r from-retro-teal/20 to-retro-cyan/20 border-2 border-dashed border-retro-teal"
               >
                 <motion.span
                   className="text-4xl"

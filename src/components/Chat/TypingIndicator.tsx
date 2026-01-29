@@ -9,7 +9,7 @@ export function TypingIndicator() {
     <div className="flex items-end gap-3">
       {/* Idol Avatar */}
       <motion.div
-        className="flex-shrink-0 w-10 h-10 bg-win95-medium border-2 border-t-white border-l-white border-b-gray-600 border-r-gray-600 flex items-center justify-center text-xl"
+        className="shrink-0 w-10 h-10 bg-win95-medium border-2 border-t-white border-l-white border-b-gray-600 border-r-gray-600 flex items-center justify-center text-xl"
         animate={{ y: [0, -2, 0] }}
         transition={{ duration: 1, repeat: Infinity }}
       >
