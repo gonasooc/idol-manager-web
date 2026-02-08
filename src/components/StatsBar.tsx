@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export function StatsBar() {
   const persona = useAtomValue(currentPersonaAtom);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true);
 
   return (
     <div className="sticky top-0 z-40 p-2">
