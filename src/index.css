@@ -14,7 +14,11 @@
   --retro-warning: #ffc800;
   --retro-error: #ff124f;
   --retro-black: #000000;
+  --retro-error: #ff124f;
+  --retro-black: #000000;
   --retro-gray: #e0e0e0;
+  --retro-cyan: #00ffff;
+  --retro-blue: #007bff; /* Brighter blue for better visibility */
   
   /* Borders */
   --border-width: 3px;
@@ -165,8 +169,8 @@ body {
 }
 
 .retro-bubble-user {
-  background-color: var(--retro-primary); /* Pink for user */
-  color: var(--retro-black);
+  background-color: var(--retro-secondary); /* Purple for user to distinct from Pink UI */
+  color: #fff; /* White text for better contrast on dark purple */
   border-bottom-right-radius: 4px;
 }
 
