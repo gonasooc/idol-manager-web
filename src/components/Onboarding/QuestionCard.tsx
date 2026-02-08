@@ -25,8 +25,8 @@ export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
         {/* Content */}
         <div className="retro-content">
           {/* Question Text */}
-          <div className="mb-6 p-4 bg-gray-900 border-2 border-gray-700 text-center">
-            <h2 className="font-retro text-2xl text-amber-300 leading-relaxed drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]">
+          <div className="mb-6 p-4 bg-gray-900 border-2 border-gray-700 text-left">
+            <h2 className="font-retro text-lg text-amber-300 leading-relaxed drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]">
               {question.question}
             </h2>
           </div>
@@ -37,7 +37,7 @@ export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
               <motion.button
                 key={index}
                 onClick={() => onAnswer(index)}
-                className="w-full p-4 text-left font-retro text-xl bg-win95-medium border-2 border-t-white border-l-white border-b-gray-600 border-r-gray-600 hover:bg-retro-teal/20 transition-none group"
+                className="w-full p-4 text-left font-retro text-lg bg-win95-medium border-2 border-t-white border-l-white border-b-gray-600 border-r-gray-600 hover:bg-retro-teal/20 transition-none group"
                 whileTap={{
                   borderColor: '#808080 #ffffff #ffffff #808080',
                 }}
@@ -58,7 +58,7 @@ export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
 
           {/* Hint */}
           <div className="mt-4 text-center">
-            <span className="font-retro text-lg text-gray-500">
+            <span className="font-retro text-base text-gray-500">
               계속하려면 옵션을 선택하세요
             </span>
           </div>
