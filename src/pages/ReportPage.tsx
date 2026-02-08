@@ -115,10 +115,6 @@ export function ReportPage() {
         >
           <div className="retro-titlebar">
             <span>CURRENT_STATUS.exe</span>
-            <div className="flex gap-1">
-              <button className="retro-titlebar-btn">_</button>
-              <button className="retro-titlebar-btn">x</button>
-            </div>
           </div>
           <div className="retro-content">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">

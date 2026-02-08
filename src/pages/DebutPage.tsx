@@ -21,10 +21,6 @@ export function DebutPage() {
         {/* Title Bar */}
         <div className="retro-titlebar">
           <span>DEBUT_CARD.exe</span>
-          <div className="flex gap-1">
-            <button className="retro-titlebar-btn">_</button>
-            <button className="retro-titlebar-btn">x</button>
-          </div>
         </div>
 
         {/* Content */}

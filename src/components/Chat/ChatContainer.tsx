@@ -210,7 +210,12 @@ export function ChatContainer() {
       )}
 
       {/* Chat Input */}
-      <ChatInput onSend={handleSendMessage} disabled={isTyping || isOnline === false} />
+      <ChatInput 
+        onSend={handleSendMessage} 
+        disabled={isTyping || isOnline === false} 
+        isOnline={isOnline !== false} 
+        isTyping={isTyping}
+      />
     </div>
   );
 }

@@ -106,14 +106,14 @@ export function DebutCardModal({
             style={{ border: '4px solid black' }}
           >
             {/* Title Bar */}
-            <div className="flex items-center justify-between px-3 py-2 border-b-4 border-black bg-retro-secondary text-white">
+            <div className="flex items-center justify-between px-3 py-2 border-b-4 border-black bg-[#7928ca] text-white">
               <div className="flex items-center gap-2">
                 <span className="text-xl">✨</span>
-                <span className="font-pixel text-sm tracking-widest">DEBUT_CARD.exe</span>
+                <span className="font-pixel text-sm tracking-widest font-bold drop-shadow-md">DEBUT_CARD.exe</span>
               </div>
               <button
                 onClick={onClose}
-                className="w-8 h-8 flex items-center justify-center bg-retro-error border-2 border-black hover:bg-red-400 active:translate-y-0.5 shadow-[2px_2px_0_0_#000] active:shadow-none transition-all"
+                className="w-8 h-8 flex items-center justify-center bg-[#ff124f] border-2 border-black hover:bg-red-400 active:translate-y-0.5 shadow-[2px_2px_0_0_#000] active:shadow-none transition-all"
               >
                 <span className="font-pixel font-bold text-white">X</span>
               </button>

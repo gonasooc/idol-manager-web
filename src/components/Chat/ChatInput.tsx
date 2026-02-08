@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 interface ChatInputProps {
   onSend: (message: string) => void;
   disabled?: boolean;
+  isOnline?: boolean;     // New prop
+  isTyping?: boolean;     // New prop
 }
 
-export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
+export function ChatInput({ onSend, disabled = false, isOnline = true, isTyping = false }: ChatInputProps) {
   const [input, setInput] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -37,6 +39,18 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
     }
   };
 
+  // Determine placeholder and status text
+  let placeholderText = "메시지를 입력하세요...";
+  let statusText = `${input.length}/1000`;
+
+  if (isOnline === false) {
+    placeholderText = "연결 중이거나 오프라인 상태입니다...";
+    statusText = "OFFLINE";
+  } else if (isTyping) {
+    placeholderText = "답변을 기다리고 있습니다...";
+    statusText = "TYPING...";
+  }
+
   return (
     <div className="bg-white p-3 border-t-[3px] border-black">
       <div className="max-w-4xl mx-auto flex items-end gap-2">
@@ -46,11 +60,11 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder={disabled ? "연결 중이거나 오프라인 상태입니다..." : "메시지를 입력하세요..."}
+          placeholder={placeholderText}
           disabled={disabled}
           maxLength={1000}
           rows={1}
-          className="retro-input flex-1 resize-none disabled:bg-gray-100 disabled:cursor-not-allowed overflow-y-auto disabled:text-gray-400"
+          className="retro-input flex-1 p-3 resize-none disabled:bg-gray-100 disabled:cursor-not-allowed overflow-y-auto disabled:text-gray-400"
           style={{
             minHeight: '44px',
             maxHeight: '120px',
@@ -81,7 +95,7 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
           ENTER로 전송 | SHIFT+ENTER로 줄바꿈
         </span>
         <span className={`font-pixel text-[10px] ${input.length >= 1000 ? 'text-retro-error' : 'text-gray-400'}`}>
-          {disabled ? "OFFLINE" : `${input.length}/1000`}
+          {statusText}
         </span>
       </div>
     </div>
