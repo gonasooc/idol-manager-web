@@ -93,33 +93,38 @@ export function DebutCardModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-retro-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           onClick={onClose}
         >
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            className="retro-window max-w-lg w-full max-h-[90vh] overflow-y-auto"
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="retro-window max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-[8px_8px_0_0_#000]"
             onClick={(e) => e.stopPropagation()}
+            style={{ border: '4px solid black' }}
           >
             {/* Title Bar */}
-            <div className="retro-titlebar">
-              <span>CARD_GENERATOR.exe</span>
+            <div className="flex items-center justify-between px-3 py-2 border-b-4 border-black bg-retro-secondary text-white">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">✨</span>
+                <span className="font-pixel text-sm tracking-widest">DEBUT_CARD.exe</span>
+              </div>
               <button
                 onClick={onClose}
-                className="retro-titlebar-btn"
+                className="w-8 h-8 flex items-center justify-center bg-retro-error border-2 border-black hover:bg-red-400 active:translate-y-0.5 shadow-[2px_2px_0_0_#000] active:shadow-none transition-all"
               >
-                x
+                <span className="font-pixel font-bold text-white">X</span>
               </button>
             </div>
 
             {/* Content */}
-            <div className="retro-content">
+            <div className="p-6 bg-retro-bg">
               {/* Name Input */}
-              <div className="mb-4">
-                <label className="font-pixel text-xs text-gray-700 block mb-2">
-                  IDOL NAME:
+              <div className="mb-6">
+                <label className="font-pixel text-xs text-black block mb-2 px-1">
+                  ENTER IDOL NAME:
                 </label>
                 <input
                   type="text"
@@ -127,12 +132,12 @@ export function DebutCardModal({
                   onChange={(e) => setIdolName(e.target.value.toUpperCase())}
                   placeholder="ENTER NAME"
                   maxLength={20}
-                  className="retro-input w-full uppercase"
+                  className="retro-input w-full uppercase text-center font-pixel text-xl tracking-widest bg-white border-4 border-black p-3 focus:outline-none focus:ring-4 focus:ring-retro-primary/30"
                 />
               </div>
 
               {/* Card Preview */}
-              <div ref={cardRef} className="mb-4">
+              <div ref={cardRef} className="mb-6 transform hover:scale-[1.02] transition-transform duration-300">
                 <DebutCard
                   idolName={idolName}
                   bondLevel={bondLevel}
@@ -143,11 +148,11 @@ export function DebutCardModal({
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-2">
+              <div className="flex gap-4">
                 <button
                   onClick={handleSaveImage}
                   disabled={isSaving}
-                  className="retro-btn retro-btn-primary flex-1 flex items-center justify-center gap-2"
+                  className="flex-1 retro-btn bg-retro-primary text-white hover:bg-pink-500 border-4 border-black shadow-[4px_4px_0_0_#000] active:translate-y-1 active:shadow-[2px_2px_0_0_#000] py-4 flex items-center justify-center gap-2 transition-all font-pixel text-sm"
                 >
                   {isSaving ? (
                     <>
@@ -155,22 +160,22 @@ export function DebutCardModal({
                         animate={{ rotate: 360 }}
                         transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                       >
-                        [*]
+                        ⌛
                       </motion.span>
                       SAVING...
                     </>
                   ) : (
                     <>
-                      [v] SAVE
+                      💾 SAVE CARD
                     </>
                   )}
                 </button>
 
                 <button
                   onClick={handleShare}
-                  className="retro-btn flex-1 flex items-center justify-center gap-2"
+                  className="flex-1 retro-btn bg-retro-warning text-black hover:bg-yellow-400 border-4 border-black shadow-[4px_4px_0_0_#000] active:translate-y-1 active:shadow-[2px_2px_0_0_#000] py-4 flex items-center justify-center gap-2 transition-all font-pixel text-sm"
                 >
-                  {'[>]'} SHARE
+                  📡 SHARE
                 </button>
               </div>
             </div>

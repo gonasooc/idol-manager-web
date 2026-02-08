@@ -1,48 +1,47 @@
 import { useState } from 'react';
 import { useAtomValue } from 'jotai';
-import { currentPersonaAtom, bondLevelAtom } from '@/store/atoms';
+import { currentPersonaAtom } from '@/store/atoms';
 import { BondLevelBar } from '@/components/BondLevelBar';
 import { PersonalityGauge } from '@/components/PersonalityGauge';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function StatsBar() {
   const persona = useAtomValue(currentPersonaAtom);
-  const bondLevel = useAtomValue(bondLevelAtom);
   const [isMinimized, setIsMinimized] = useState(false);
 
   return (
-    <div className="sticky top-0 z-40">
-      {/* Retro Window Container */}
-      <div className="retro-window mx-2 mt-2">
-        {/* Title Bar - 클릭으로 토글 */}
+    <div className="sticky top-0 z-40 p-2">
+      {/* Neo-Retro Window Container */}
+      <div className="retro-window bg-white/90 backdrop-blur-sm">
+        {/* Title Bar */}
         <div
           className="retro-titlebar cursor-pointer select-none"
           onClick={() => setIsMinimized(!isMinimized)}
         >
           <div className="flex items-center gap-2">
-            <span className="text-base">{persona.emoji}</span>
-            <span>STATUS.exe</span>
-            {/* 최소화 시 요약 정보 표시 */}
+            <span className="text-lg filter drop-shadow-md">{persona.emoji}</span>
+            <span className="font-bold tracking-widest">STATUS_CHECK</span>
+            {/* Minimized summary */}
             {isMinimized && (
-              <span className="font-retro text-xs ml-2 text-white/80">
-                - {persona.title} | ❤️ {bondLevel}
+              <span className="font-retro text-sm ml-2 animate-pulse">
+                - {persona.title}
               </span>
             )}
           </div>
-          <div className="flex gap-1">
+          <div className="flex gap-2">
             <button
-              className="retro-titlebar-btn"
+              className="retro-titlebar-btn min hover:bg-green-400"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsMinimized(!isMinimized);
               }}
             >
-              {isMinimized ? '□' : '_'}
+              {isMinimized ? '+' : '-'}
             </button>
           </div>
         </div>
 
-        {/* Content Area - 애니메이션으로 열기/닫기 */}
+        {/* Content Area */}
         <AnimatePresence>
           {!isMinimized && (
             <motion.div
@@ -50,33 +49,35 @@ export function StatsBar() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.3, ease: 'backOut' }}
             >
               {/* Current Persona Display */}
               <motion.div
                 key={persona.type}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="flex items-center gap-3 p-3 bg-linear-to-r from-retro-teal/20 to-retro-cyan/20 border-2 border-dashed border-retro-teal"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="flex items-center gap-4 p-4 bg-retro-bg border-2 border-dashed border-black rounded-lg shadow-sm"
               >
-                <motion.span
-                  className="text-4xl"
-                  animate={{ y: [0, -4, 0] }}
-                  transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 2 }}
-                >
-                  {persona.emoji}
-                </motion.span>
-                <div>
-                  <h2 className="font-pixel text-sm text-gray-900">{persona.title}</h2>
-                  <p className="font-retro text-lg text-gray-700">{persona.description}</p>
+                <div className="relative">
+                    <motion.div 
+                        className="absolute inset-0 bg-retro-warning rounded-full blur-md opacity-50"
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    <span className="text-5xl relative z-10">{persona.emoji}</span>
+                </div>
+                
+                <div className="flex-1">
+                  <div className="font-bold text-xl">{persona.title}</div>
+                  <p className="font-retro text-lg text-gray-600 leading-tight mt-1">{persona.description}</p>
                 </div>
               </motion.div>
 
-              {/* Bond Level Bar */}
-              <BondLevelBar />
-
-              {/* Personality Gauge */}
-              <PersonalityGauge />
+              <div className="grid grid-cols-1 gap-4">
+                  <BondLevelBar />
+                  <div className="w-full h-0.5 bg-black/10 my-1" />
+                  <PersonalityGauge />
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

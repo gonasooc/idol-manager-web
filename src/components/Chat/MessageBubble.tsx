@@ -18,17 +18,16 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2 }}
+      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
       className={`flex items-end gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
     >
       {/* Idol Avatar (only for idol messages) */}
       {!isUser && (
         <motion.div
-          className="shrink-0 w-10 h-10 bg-win95-medium border-2 border-t-white border-l-white border-b-gray-600 border-r-gray-600 flex items-center justify-center text-xl"
-          animate={{ y: [0, -2, 0] }}
-          transition={{ duration: 1, repeat: Infinity, repeatDelay: 3 }}
+          className="shrink-0 w-12 h-12 bg-white border-2 border-black rounded-full overflow-hidden flex items-center justify-center text-xl shadow-[2px_2px_0_0_rgba(0,0,0,1)]"
+          whileHover={{ scale: 1.1, rotate: 5 }}
         >
           {persona.emoji}
         </motion.div>
@@ -38,13 +37,13 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       <div
         className={`max-w-[75%] ${
           isUser
-            ? 'retro-bubble retro-bubble-user'
-            : 'retro-bubble retro-bubble-idol'
+            ? 'retro-bubble retro-bubble-user animate-pop-in origin-bottom-right'
+            : 'retro-bubble retro-bubble-idol animate-pop-in origin-bottom-left'
         }`}
       >
         {/* Idol name (only for idol messages) */}
         {!isUser && (
-          <div className="font-pixel text-xs text-gray-800 mb-2 pb-1 border-b border-dashed border-gray-500">
+          <div className="font-pixel text-xs text-retro-primary mb-2 pb-1 border-b-2 border-dashed border-gray-200 uppercase tracking-wider">
             {persona.title}
           </div>
         )}
@@ -56,13 +55,13 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 
         {/* Stat changes display */}
         {message.statChanges && (
-          <div className="mt-2 pt-2 border-t border-dashed border-gray-500 flex flex-wrap gap-2">
+          <div className="mt-2 pt-2 border-t-2 border-gray-100 flex flex-wrap gap-2">
             {message.statChanges.bond !== undefined && message.statChanges.bond !== 0 && (
               <span
-                className={`font-pixel text-xs px-2 py-1 ${
+                className={`font-pixel text-[10px] px-2 py-1 rounded-sm border border-black shadow-[1px_1px_0_0_rgba(0,0,0,1)] ${
                   message.statChanges.bond > 0
-                    ? 'bg-pink-600 text-white'
-                    : 'bg-red-700 text-white'
+                    ? 'bg-retro-primary text-black'
+                    : 'bg-retro-error text-black'
                 }`}
               >
                 친밀도 {message.statChanges.bond > 0 ? '+' : ''}{message.statChanges.bond}
@@ -70,10 +69,10 @@ export function MessageBubble({ message }: MessageBubbleProps) {
             )}
             {message.statChanges.kindness !== undefined && message.statChanges.kindness !== 0 && (
               <span
-                className={`font-pixel text-xs px-2 py-1 ${
+                className={`font-pixel text-[10px] px-2 py-1 rounded-sm border border-black shadow-[1px_1px_0_0_rgba(0,0,0,1)] ${
                   message.statChanges.kindness > 0
-                    ? 'bg-amber-600 text-white'
-                    : 'bg-blue-700 text-white'
+                    ? 'bg-retro-warning text-black'
+                    : 'bg-retro-blue text-white'
                 }`}
               >
                 따뜻함 {message.statChanges.kindness > 0 ? '+' : ''}{message.statChanges.kindness}
@@ -81,10 +80,10 @@ export function MessageBubble({ message }: MessageBubbleProps) {
             )}
             {message.statChanges.confidence !== undefined && message.statChanges.confidence !== 0 && (
               <span
-                className={`font-pixel text-xs px-2 py-1 ${
+                className={`font-pixel text-[10px] px-2 py-1 rounded-sm border border-black shadow-[1px_1px_0_0_rgba(0,0,0,1)] ${
                   message.statChanges.confidence > 0
-                    ? 'bg-orange-600 text-white'
-                    : 'bg-emerald-700 text-white'
+                    ? 'bg-retro-success text-black'
+                    : 'bg-retro-secondary text-white'
                 }`}
               >
                 대담함 {message.statChanges.confidence > 0 ? '+' : ''}{message.statChanges.confidence}
@@ -95,8 +94,8 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 
         {/* Timestamp */}
         <div
-          className={`font-retro text-sm mt-2 ${
-            isUser ? 'text-gray-700' : 'text-gray-700'
+          className={`font-retro text-xs mt-2 opacity-60 ${
+            isUser ? 'text-white' : 'text-black'
           }`}
         >
           {new Date(message.timestamp).toLocaleTimeString('ko-KR', {
@@ -108,7 +107,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 
       {/* User Avatar Placeholder */}
       {isUser && (
-        <div className="shrink-0 w-10 h-10 bg-retro-cyan border-2 border-t-white border-l-white border-b-gray-600 border-r-gray-600 flex items-center justify-center font-pixel text-xs text-gray-800">
+        <div className="shrink-0 w-10 h-10 bg-retro-black border-2 border-black rounded-lg flex items-center justify-center font-pixel text-[8px] text-white shadow-[2px_2px_0_0_rgba(100,100,100,1)]">
           YOU
         </div>
       )}

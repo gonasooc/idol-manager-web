@@ -24,13 +24,8 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
   };
 
   return (
-    <div className="bg-win95-medium p-3 border-t-2 border-t-white">
+    <div className="bg-white p-3 border-t-[3px] border-black">
       <div className="max-w-4xl mx-auto flex items-end gap-2">
-        {/* Input Label */}
-        <div className="font-pixel text-xs text-gray-700 mb-2 hidden sm:block">
-          메시지:
-        </div>
-
         {/* Retro Text Input */}
         <textarea
           value={input}
@@ -39,21 +34,22 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
           placeholder="메시지를 입력하세요..."
           disabled={disabled}
           rows={1}
-          className="retro-input flex-1 resize-none disabled:bg-gray-200 disabled:cursor-not-allowed"
+          className="retro-input flex-1 resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
           style={{
-            minHeight: '40px',
+            minHeight: '44px',
             maxHeight: '120px',
           }}
         />
 
         {/* Send Button */}
         <motion.button
-          whileTap={{ scale: 0.98 }}
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.05, rotate: -2 }}
           onClick={handleSend}
           disabled={disabled || !input.trim()}
           className={`retro-btn ${
             disabled || !input.trim()
-              ? ''
+              ? 'opacity-50'
               : 'retro-btn-primary'
           }`}
         >
@@ -62,8 +58,8 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
       </div>
 
       {/* Keyboard hint */}
-      <div className="max-w-4xl mx-auto mt-2">
-        <span className="font-retro text-sm text-gray-600">
+      <div className="max-w-4xl mx-auto mt-2 text-right">
+        <span className="font-pixel text-[10px] text-gray-400">
           ENTER로 전송 | SHIFT+ENTER로 줄바꿈
         </span>
       </div>

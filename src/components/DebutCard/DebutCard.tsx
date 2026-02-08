@@ -9,31 +9,25 @@ interface DebutCardProps {
   persona: PersonaInfo;
 }
 
-const PERSONA_COLORS: Record<string, { primary: string; secondary: string }> = {
-  'gentle-confident': { primary: '#ffd700', secondary: '#ff69b4' },
-  'gentle-shy': { primary: '#f4a460', secondary: '#ffd700' },
-  'cold-confident': { primary: '#ff4500', secondary: '#ff6b6b' },
-  'cold-shy': { primary: '#4169e1', secondary: '#40e0d0' },
-  'balanced': { primary: '#32cd32', secondary: '#40e0d0' },
+const PERSONA_STYLES: Record<string, { bg: string; border: string; accent: string }> = {
+  'gentle-confident': { bg: 'bg-retro-warning', border: 'border-black', accent: 'text-retro-primary' },
+  'gentle-shy': { bg: 'bg-retro-success', border: 'border-black', accent: 'text-retro-warning' },
+  'cold-confident': { bg: 'bg-retro-primary', border: 'border-black', accent: 'text-black' },
+  'cold-shy': { bg: 'bg-retro-blue', border: 'border-black', accent: 'text-retro-cyan' },
+  'balanced': { bg: 'bg-retro-secondary', border: 'border-black', accent: 'text-retro-green' },
 };
 
-function getCardGrade(bondLevel: number): { grade: string; stars: string; color: string } {
-  if (bondLevel >= 90) {
-    return { grade: 'S', stars: '***', color: '#ffd700' };
-  } else if (bondLevel >= 70) {
-    return { grade: 'A', stars: '**', color: '#c0c0c0' };
-  } else if (bondLevel >= 50) {
-    return { grade: 'B', stars: '*', color: '#f4a460' };
-  } else {
-    return { grade: 'C', stars: '-', color: '#808080' };
-  }
+function getCardGrade(bondLevel: number): { grade: string; color: string } {
+  if (bondLevel >= 90) return { grade: 'S', color: '#ff0080' }; // Hot Pink
+  if (bondLevel >= 70) return { grade: 'A', color: '#ffc800' }; // Gold
+  if (bondLevel >= 50) return { grade: 'B', color: '#00af54' }; // Green
+  return { grade: 'C', color: '#888' };
 }
 
 function getStatBar(value: number, total: number = 100) {
   const percentage = Math.max(0, Math.min(100, (value / total) * 100));
   const filled = Math.round(percentage / 10);
-  const empty = 10 - filled;
-  return '|'.repeat(filled) + '.'.repeat(empty);
+  return Array(10).fill(0).map((_, i) => i < filled ? '■' : '□').join('');
 }
 
 function getTitle(bondLevel: number): string {
@@ -44,8 +38,8 @@ function getTitle(bondLevel: number): string {
 }
 
 export function DebutCard({ idolName, bondLevel, kindness, confidence, persona }: DebutCardProps) {
-  const { grade, stars, color } = getCardGrade(bondLevel);
-  const colors = PERSONA_COLORS[persona.type] || PERSONA_COLORS['balanced'];
+  const { grade, color } = getCardGrade(bondLevel);
+  const style = PERSONA_STYLES[persona.type] || PERSONA_STYLES['balanced'];
   const title = getTitle(bondLevel);
 
   // Convert kindness and confidence to 0-100 scale
@@ -54,118 +48,91 @@ export function DebutCard({ idolName, bondLevel, kindness, confidence, persona }
 
   return (
     <motion.div
-      initial={{ scale: 0.95, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      className="relative w-full max-w-sm mx-auto"
-      style={{ aspectRatio: '2/3' }}
+      initial={{ scale: 0.9, opacity: 0, rotateY: 90 }}
+      animate={{ scale: 1, opacity: 1, rotateY: 0 }}
+      transition={{ type: 'spring', damping: 12 }}
+      className="relative w-full max-w-sm mx-auto perspective-1000"
+      style={{ aspectRatio: '3/4' }}
     >
-      {/* Card Frame */}
-      <div
-        className="absolute inset-0 p-1"
-        style={{
-          background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
-        }}
-      >
-        {/* Inner card */}
-        <div className="h-full border-4 border-gray-800 flex flex-col p-4 relative overflow-hidden" style={{ backgroundColor: '#1a1a4e' }}>
-          {/* Scanline effect */}
-          <div className="absolute inset-0 pointer-events-none opacity-10">
-            {Array.from({ length: 50 }).map((_, i) => (
-              <div
-                key={i}
-                className="h-1 bg-white"
-                style={{ marginBottom: '2px', opacity: 0.1 }}
-              />
-            ))}
-          </div>
+      {/* Card Container */}
+      <div className={`h-full w-full bg-white border-[4px] border-black rounded-xl overflow-hidden shadow-[8px_8px_0_0_rgba(0,0,0,1)] flex flex-col relative`}>
+        
+        {/* Holographic Overlay for S-Rank */}
+        {bondLevel >= 90 && (
+            <div className="absolute inset-0 z-20 pointer-events-none opacity-30 bg-gradient-to-tr from-transparent via-white to-transparent animate-pulse" />
+        )}
 
-          {/* Grade Badge */}
-          <div
-            className="absolute top-4 right-4 w-14 h-14 flex items-center justify-center border-4"
-            style={{ borderColor: color, backgroundColor: `${color}30` }}
-          >
-            <span className="font-pixel text-2xl" style={{ color }}>
-              {grade}
-            </span>
-          </div>
+        {/* Header Section */}
+        <div className={`${style.bg} p-4 border-b-4 border-black relative overflow-hidden`}>
+            {/* Background Pattern */}
+             <div className="absolute inset-0 opacity-10" style={{ 
+                backgroundImage: 'radial-gradient(#000 1px, transparent 1px)',
+                backgroundSize: '8px 8px'
+            }} />
 
-          {/* Header: Idol Name & Persona */}
-          <div className="mb-4">
-            <div className="text-4xl mb-2">{persona.emoji}</div>
-            <h1 className="font-pixel text-lg text-white drop-shadow-lg truncate pr-16">
-              {idolName}
-            </h1>
-            <p className="font-retro text-xl" style={{ color: colors.primary }}>
-              {persona.title}
-            </p>
-          </div>
-
-          {/* Stats Section */}
-          <div className="flex-1 flex flex-col justify-center space-y-3 p-4 border-2 border-gray-700" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-            {/* Bond Level */}
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="font-pixel text-xs" style={{ color: '#9ca3af' }}>♥ 친밀도</span>
-                <span className="font-pixel text-xs" style={{ color: '#ff69b4' }}>{bondLevel}</span>
-              </div>
-              <div className="font-retro text-lg tracking-widest" style={{ color: '#ff69b4' }}>
-                [{getStatBar(bondLevel)}]
-              </div>
+            <div className="relative z-10 flex justify-between items-start">
+                <div>
+                    <span className="font-pixel text-xs bg-black text-white px-2 py-1 mb-2 inline-block rounded-sm">{title}</span>
+                    <h1 className="font-pixel text-2xl text-black leading-none uppercase tracking-tighter drop-shadow-sm filter mt-1">
+                        {idolName}
+                    </h1>
+                    <p className="font-retro text-lg font-bold opacity-80 mt-1 uppercase">{persona.title}</p>
+                </div>
+                <div className="w-16 h-16 bg-white border-4 border-black rounded-full flex items-center justify-center text-4xl shadow-[2px_2px_0_0_rgba(0,0,0,0.5)]">
+                    {persona.emoji}
+                </div>
             </div>
-
-            {/* Kindness */}
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="font-pixel text-xs" style={{ color: '#9ca3af' }}>♡ 상냥함</span>
-                <span className="font-pixel text-xs" style={{ color: '#ffd700' }}>{kindnessDisplay}</span>
-              </div>
-              <div className="font-retro text-lg tracking-widest" style={{ color: '#ffd700' }}>
-                [{getStatBar(kindnessDisplay)}]
-              </div>
+            
+             {/* Grade Badge */}
+             <div className="absolute -bottom-6 -right-2 rotate-12 z-20">
+                <div className="relative">
+                     <span className="absolute inset-0 text-black translate-x-1 translate-y-1 font-pixel text-6xl font-bold">{grade}</span>
+                     <span className="font-pixel text-6xl font-bold" style={{ color: color }}>{grade}</span>
+                </div>
             </div>
+        </div>
 
-            {/* Confidence */}
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="font-pixel text-xs" style={{ color: '#9ca3af' }}>★ 자신감</span>
-                <span className="font-pixel text-xs" style={{ color: '#40e0d0' }}>{confidenceDisplay}</span>
-              </div>
-              <div className="font-retro text-lg tracking-widest" style={{ color: '#40e0d0' }}>
-                [{getStatBar(confidenceDisplay)}]
-              </div>
-            </div>
-          </div>
+        {/* Info Section */}
+        <div className="flex-1 p-6 flex flex-col justify-center space-y-6 bg-retro-bg font-retro relative">
+             {/* Watermark */}
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-9xl opacity-5 pointer-events-none grayscale">
+                 {persona.emoji}
+             </div>
 
-          {/* Footer: Title & Date */}
-          <div className="mt-4 text-center">
-            <div
-              className="font-pixel text-sm mb-2"
-              style={{ color: color }}
-            >
-              {stars} {title} {stars}
-            </div>
-            <div className="font-retro text-lg" style={{ color: '#6b7280' }}>
-              {new Date().toLocaleDateString('ko-KR', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-              }).replace(/\. /g, '/').replace('.', '')}
-            </div>
-          </div>
+            <div className="space-y-4 relative z-10">
+                <div className="bg-white p-3 border-2 border-black shadow-[4px_4px_0_0_rgba(0,0,0,0.1)]">
+                    <div className="flex justify-between items-center mb-1">
+                        <span className="font-bold text-lg">친밀도</span>
+                        <span className="font-pixel text-xs bg-retro-primary text-black px-1">{bondLevel}%</span>
+                    </div>
+                    <div className="font-mono text-sm tracking-tighter text-retro-primary">
+                        {getStatBar(bondLevel)}
+                    </div>
+                </div>
 
-          {/* S-Rank Sparkle Effect */}
-          {bondLevel >= 90 && (
-            <motion.div
-              className="absolute inset-0 pointer-events-none"
-              animate={{
-                background: [
-                  'linear-gradient(45deg, transparent 40%, rgba(255,215,0,0.3) 50%, transparent 60%)',
-                  'linear-gradient(45deg, transparent 0%, rgba(255,215,0,0.3) 10%, transparent 20%)',
-                ],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-          )}
+                <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-white p-2 border-2 border-black shadow-[2px_2px_0_0_rgba(0,0,0,0.1)]">
+                        <div className="font-bold text-sm mb-1">상냥함</div>
+                        <div className="font-mono text-xs tracking-tighter text-retro-warning overflow-hidden whitespace-nowrap">
+                            {getStatBar(kindnessDisplay, 100).substring(0, 5)}...
+                        </div>
+                        <div className="text-right font-pixel text-[10px] mt-1">{kindnessDisplay}</div>
+                    </div>
+                     <div className="bg-white p-2 border-2 border-black shadow-[2px_2px_0_0_rgba(0,0,0,0.1)]">
+                        <div className="font-bold text-sm mb-1">대담함</div>
+                        <div className="font-mono text-xs tracking-tighter text-retro-success overflow-hidden whitespace-nowrap">
+                            {getStatBar(confidenceDisplay, 100).substring(0, 5)}...
+                        </div>
+                        <div className="text-right font-pixel text-[10px] mt-1">{confidenceDisplay}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {/* Footer */}
+        <div className="bg-black text-white p-3 flex justify-between items-center font-pixel text-[10px]">
+            <span>IDOL MANAGER CARD</span>
+            <span className="opacity-70">{new Date().toLocaleDateString()}</span>
         </div>
       </div>
     </motion.div>

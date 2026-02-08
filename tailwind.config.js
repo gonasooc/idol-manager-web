@@ -11,42 +11,34 @@ export default {
         retro: ['"VT323"', 'monospace'],
       },
       colors: {
-        // Retro Color Palette
+        // Neo-Retro / Y2K Color Palette
         retro: {
-          cream: '#f5f5dc',
-          beige: '#e8dcc4',
-          teal: '#40e0d0',
-          cyan: '#5bc0be',
-          orange: '#f4a460',
-          gold: '#ffd700',
-          pink: '#ff69b4',
-          red: '#ff6b6b',
-          'blue-dark': '#1a1a4e',
-          blue: '#4169e1',
-          green: '#32cd32',
+          bg: '#fffbf0', // Warm cream background
+          surface: '#ffffff',
+          primary: '#ff0080', // Hot Pink
+          secondary: '#7928ca', // Vivid Purple
+          success: '#00af54', // Green
+          warning: '#ffc800', // Yellow
+          error: '#ff124f', // Red
+          blue: '#0070f3',
+          cyan: '#50e3c2',
+          black: '#000000',
+          gray: '#888888',
+          'gray-light': '#f4f4f4',
         },
-        // Window 95 style borders
-        win95: {
-          light: '#ffffff',
-          medium: '#c0c0c0',
-          dark: '#808080',
-          darker: '#404040',
-          bg: '#c0c0c0',
-          title: '#000080',
-        },
-        // Bond level colors
+        // Bond level colors (updated to be more vivid)
         bond: {
-          low: '#ff6b6b',
-          mid: '#f4a460',
-          high: '#ffd700',
-          max: '#ff69b4',
+          low: '#ff124f',
+          mid: '#ffc800',
+          high: '#00af54',
+          max: '#ff0080',
         },
       },
       boxShadow: {
-        'retro-outset': 'inset -2px -2px 0 #808080, inset 2px 2px 0 #ffffff',
-        'retro-inset': 'inset 2px 2px 0 #808080, inset -2px -2px 0 #ffffff',
-        'pixel': '4px 4px 0 #333',
-        'pixel-sm': '2px 2px 0 #333',
+        'neo-brutal': '4px 4px 0 0 #000000',
+        'neo-brutal-sm': '2px 2px 0 0 #000000',
+        'neo-brutal-lg': '8px 8px 0 0 #000000',
+        'neo-brutal-inset': 'inset 2px 2px 0 0 #000000',
       },
       keyframes: {
         'float-up': {
@@ -54,8 +46,8 @@ export default {
           '100%': { transform: 'translateY(-40px)', opacity: '0' },
         },
         'pulse-glow': {
-          '0%, 100%': { boxShadow: '0 0 5px currentColor' },
-          '50%': { boxShadow: '0 0 20px currentColor' },
+          '0%, 100%': { boxShadow: '0 0 0px currentColor' },
+          '50%': { boxShadow: '0 0 10px currentColor' },
         },
         'blink': {
           '0%, 100%': { opacity: '1' },
@@ -65,27 +57,32 @@ export default {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-4px)' },
         },
-        'scanline': {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(100%)' },
+        'pop-in': {
+          '0%': { transform: 'scale(0.8)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
         },
-        'sparkle': {
-          '0%, 100%': { opacity: '0', transform: 'scale(0)' },
-          '50%': { opacity: '1', transform: 'scale(1)' },
+        'slide-up': {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
         },
-        'typing': {
-          'from': { width: '0' },
-          'to': { width: '100%' },
+        'marquee': {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(-100%)' },
         },
+        'wiggle': {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        }
       },
       animation: {
         'float-up': 'float-up 1s ease-out forwards',
-        'pulse-glow': 'pulse-glow 1s ease-in-out',
+        'pulse-glow': 'pulse-glow 1.5s ease-in-out infinite',
         'blink': 'blink 1s step-end infinite',
         'pixel-bounce': 'pixel-bounce 0.5s ease-in-out infinite',
-        'scanline': 'scanline 8s linear infinite',
-        'sparkle': 'sparkle 1.5s ease-in-out infinite',
-        'typing': 'typing 2s steps(20) forwards',
+        'pop-in': 'pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+        'slide-up': 'slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'marquee': 'marquee 15s linear infinite',
+        'wiggle': 'wiggle 1s ease-in-out infinite',
       },
     },
   },
