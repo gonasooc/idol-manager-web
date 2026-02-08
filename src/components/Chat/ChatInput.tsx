@@ -19,8 +19,8 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
   }, [input]);
 
   const handleSend = () => {
-    // Allow whitespace messages (removed trim check), but prevent empty string
-    if (input.length > 0 && !disabled) {
+    // Prevent empty or whitespace-only messages
+    if (input.trim().length > 0 && !disabled) {
       onSend(input);
       setInput('');
       // Reset height
@@ -63,9 +63,9 @@ export function ChatInput({ onSend, disabled = false }: ChatInputProps) {
           whileTap={{ scale: 0.95 }}
           whileHover={{ scale: 1.05, rotate: -2 }}
           onClick={handleSend}
-          disabled={disabled || input.length === 0}
+          disabled={disabled || input.trim().length === 0}
           className={`retro-btn ${
-            disabled || input.length === 0
+            disabled || input.trim().length === 0
               ? 'opacity-50'
               : 'retro-btn-primary'
           }`}

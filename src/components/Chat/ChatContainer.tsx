@@ -131,24 +131,25 @@ export function ChatContainer() {
           }
         },
         // onError: handle streaming errors
+        // onError: handle streaming errors
         (error) => {
           console.error('Stream error:', error);
           updateMessageContent({
             id: idolMessageId,
-            content: '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.',
+            content: '앗, 잠시만요! 머리 식힐 시간이 필요해요 💦 조금만 있다가 다시 대화해요!',
             isStreaming: false,
           });
-          setIsOnline(false);
+          // setIsOnline(false) removed as per user request (only health check updates status)
         }
       );
     } catch (error) {
       console.error('Message send failed:', error);
       updateMessageContent({
         id: idolMessageId,
-        content: '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.',
+        content: '앗, 잠시만요! 머리 식힐 시간이 필요해요 💦 조금만 있다가 다시 대화해요!',
         isStreaming: false,
       });
-      setIsOnline(false);
+      // setIsOnline(false) removed as per user request
     } finally {
       setIsTyping(false);
     }
