@@ -70,10 +70,6 @@ export function ResultScreen({
         {/* Title Bar */}
         <div className="retro-titlebar">
           <span>ANALYSIS_COMPLETE.exe</span>
-          <div className="flex gap-1">
-            <button className="retro-titlebar-btn">_</button>
-            <button className="retro-titlebar-btn">x</button>
-          </div>
         </div>
 
         {/* Content */}
@@ -84,7 +80,7 @@ export function ResultScreen({
               initial={{ scale: 0 }}
               animate={{ scale: 1, rotate: [0, 10, -10, 0] }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="inline-block text-6xl mb-4"
+              className="inline-block text-5xl mb-4"
             >
               {personaEmoji}
             </motion.div>
@@ -92,7 +88,7 @@ export function ResultScreen({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="font-pixel text-sm text-retro-gold mb-2"
+              className="font-pixel text-xs text-retro-gold mb-2"
             >
               {personaTitle}
             </motion.h2>
@@ -100,7 +96,7 @@ export function ResultScreen({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="font-retro text-xl text-gray-700"
+              className="font-retro text-lg text-gray-700"
             >
               {personaDescription}
             </motion.p>
@@ -140,7 +136,7 @@ export function ResultScreen({
 
           {/* Decorative message */}
           <div className="text-center mb-6 p-3 border-2 border-dashed border-retro-gold bg-retro-gold/10">
-            <span className="font-retro text-lg text-gray-700">
+            <span className="font-retro text-base text-gray-700">
               연습생 프로필이 완성되었습니다!
             </span>
           </div>

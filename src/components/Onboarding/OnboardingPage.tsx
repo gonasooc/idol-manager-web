@@ -78,16 +78,12 @@ export function OnboardingPage() {
         >
           <div className="retro-titlebar">
             <span>IDOL_MANAGER.exe</span>
-            <div className="flex gap-1">
-              <button className="retro-titlebar-btn">_</button>
-              <button className="retro-titlebar-btn">x</button>
-            </div>
           </div>
           <div className="retro-content text-center py-4">
-            <h1 className="font-pixel text-lg text-gray-900 mb-2">
+            <h1 className="font-pixel text-base text-gray-900 mb-2">
               IDOL MANAGER
             </h1>
-            <p className="font-retro text-xl text-gray-600">
+            <p className="font-retro text-lg text-gray-600">
               당신이 맡을 연습생을 알아봅시다
             </p>
           </div>
