@@ -183,8 +183,8 @@ export function ChatContainer() {
             <div className="text-6xl mb-4 animate-pop-in">{currentPersona.emoji}</div>
             <p className="font-pixel text-sm text-gray-900 mb-2">{currentPersona.title}</p>
             <p className="font-retro text-xl text-gray-700">{currentPersona.description}</p>
-            <div className="mt-8 mx-auto max-w-xs p-4 border-2 border-black bg-white shadow-[4px_4px_0_0_#000] rotate-1 hover:rotate-0 transition-transform">
-              <p className="font-retro text-lg text-gray-700 blink-cursor">
+            <div className="mt-8 mx-auto max-w-xs p-4 border-2 border-black bg-white shadow-[4px_4px_0_0_#000]">
+              <p className="font-retro text-lg text-gray-700">
                 대화를 시작하려면 메시지를 보내세요
               </p>
             </div>

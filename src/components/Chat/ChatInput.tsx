@@ -92,7 +92,7 @@ export function ChatInput({ onSend, disabled = false, isOnline = true, isTyping 
       {/* Keyboard hint & Char count */}
       <div className="max-w-4xl mx-auto mt-2 flex justify-between items-center px-1">
         <span className="font-pixel text-[10px] text-gray-400">
-          ENTER로 전송 | SHIFT+ENTER로 줄바꿈
+          ENTER로 전송
         </span>
         <span className={`font-pixel text-[10px] ${input.length >= 1000 ? 'text-retro-error' : 'text-gray-400'}`}>
           {statusText}

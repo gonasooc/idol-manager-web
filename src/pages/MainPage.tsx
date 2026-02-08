@@ -4,9 +4,9 @@ import { ChatContainer } from '@/components/Chat';
 
 export function MainPage() {
   return (
-    <div className="min-h-screen flex flex-col pb-16 bg-retro-bg">
+    <div className="h-dvh flex flex-col pb-16 bg-retro-bg overflow-hidden">
       {/* Mobile-first container with max-width for PC */}
-      <div className="w-full max-w-md mx-auto flex flex-col min-h-screen">
+      <div className="w-full max-w-md mx-auto flex flex-col h-full">
         <StatChangeAnimation />
         <StatsBar />
 
