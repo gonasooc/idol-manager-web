@@ -65,12 +65,12 @@ export function MessageBubble({ message }: MessageBubbleProps) {
                 </span>
               )}
               {message.statChanges.kindness !== undefined && message.statChanges.kindness !== 0 && (
-                <span className="font-pixel text-[9px] px-1.5 py-0.5 bg-retro-warning text-black border border-black rounded-sm">
+                <span className="font-pixel text-[9px] px-1.5 py-0.5 bg-[#ffc800] text-black border border-black rounded-sm">
                   따뜻함 {message.statChanges.kindness > 0 ? '+' : ''}{message.statChanges.kindness}
                 </span>
               )}
               {message.statChanges.confidence !== undefined && message.statChanges.confidence !== 0 && (
-                <span className="font-pixel text-[9px] px-1.5 py-0.5 bg-retro-success text-black border border-black rounded-sm">
+                <span className="font-pixel text-[9px] px-1.5 py-0.5 bg-[#00af54] text-black border border-black rounded-sm">
                   대담함 {message.statChanges.confidence > 0 ? '+' : ''}{message.statChanges.confidence}
                 </span>
               )}
