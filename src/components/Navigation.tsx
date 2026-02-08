@@ -8,69 +8,60 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { path: '/main', icon: '[ ]', label: 'CHAT' },
-  { path: '/report', icon: '[#]', label: 'STATS' },
-  { path: '/debut', icon: '[*]', label: 'CARD' },
+  { path: '/main', icon: '💬', label: '채팅' },
+  { path: '/report', icon: '📊', label: '통계' },
+  { path: '/debut', icon: '✨', label: '카드' },
 ];
 
 export function Navigation() {
   const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-win95-medium border-t-2 border-t-white z-40">
-      <div className="max-w-md mx-auto">
-        <div className="flex">
-          {NAV_ITEMS.map((item) => {
-            const isActive = location.pathname === item.path;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`relative flex-1 flex flex-col items-center justify-center py-3 transition-none ${
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-[3px] border-black z-40 pb-safe">
+      <div className="max-w-md mx-auto flex justify-around p-2 gap-2">
+        {NAV_ITEMS.map((item) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className="relative flex-1"
+            >
+              <motion.div
+                className={`flex flex-col items-center justify-center py-2 rounded-lg border-2 border-black transition-colors ${
                   isActive
-                    ? 'bg-yellow-400 border-2 border-t-yellow-200 border-l-yellow-200 border-b-yellow-600 border-r-yellow-600'
-                    : 'bg-amber-50 border-2 border-t-white border-l-white border-b-gray-400 border-r-gray-400 hover:bg-amber-100'
+                    ? 'bg-retro-primary text-black shadow-[4px_4px_0_0_#000]'
+                    : 'bg-white text-gray-500 hover:bg-gray-50'
                 }`}
+                whileTap={{ scale: 0.95 }}
+                animate={{
+                    y: isActive ? -4 : 0,
+                }}
               >
-                {/* Active indicator */}
-                {isActive && (
-                  <motion.div
-                    layoutId="activeNavIndicator"
-                    className="absolute -top-1 left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-l-transparent border-r-transparent border-b-retro-teal"
-                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                  />
-                )}
-
                 {/* Icon */}
-                <span className={`font-pixel text-sm mb-1 ${isActive ? 'text-gray-900' : 'text-gray-700'}`}>
+                <span className="text-xl mb-1 filter drop-shadow-sm">
                   {item.icon}
                 </span>
 
                 {/* Label */}
                 <span
-                  className={`font-pixel text-xs ${
-                    isActive ? 'text-gray-900 font-bold' : 'text-gray-700'
+                  className={`font-pixel text-[10px] ${
+                    isActive ? 'font-bold' : ''
                   }`}
                 >
                   {item.label}
                 </span>
-
-                {/* Active glow effect */}
+                
                 {isActive && (
-                  <motion.div
-                    className="absolute inset-0 bg-yellow-300/20 pointer-events-none"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: [0.2, 0.4, 0.2] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  />
+                    <motion.div 
+                        layoutId="nav-pill"
+                        className="absolute -bottom-3 w-12 h-1 bg-black rounded-full"
+                    />
                 )}
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* Bottom decorative border */}
-        <div className="h-1 bg-linear-to-r from-retro-teal via-retro-pink to-retro-gold" />
+              </motion.div>
+            </Link>
+          );
+        })}
       </div>
     </nav>
   );

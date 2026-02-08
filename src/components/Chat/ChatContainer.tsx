@@ -131,50 +131,59 @@ export function ChatContainer() {
           }
         },
         // onError: handle streaming errors
+        // onError: handle streaming errors
         (error) => {
           console.error('Stream error:', error);
           updateMessageContent({
             id: idolMessageId,
-            content: '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.',
+            content: '앗, 잠시만요! 머리 식힐 시간이 필요해요 💦 조금만 있다가 다시 대화해요!',
             isStreaming: false,
           });
-          setIsOnline(false);
+          // setIsOnline(false) removed as per user request (only health check updates status)
         }
       );
     } catch (error) {
       console.error('Message send failed:', error);
       updateMessageContent({
         id: idolMessageId,
-        content: '서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.',
+        content: '앗, 잠시만요! 머리 식힐 시간이 필요해요 💦 조금만 있다가 다시 대화해요!',
         isStreaming: false,
       });
-      setIsOnline(false);
+      // setIsOnline(false) removed as per user request
     } finally {
       setIsTyping(false);
     }
   };
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Retro Window Header */}
-      <div className="retro-titlebar">
-        <div className="flex items-center gap-2">
-          <span className="text-base">{currentPersona.emoji}</span>
-          <span>CHAT.exe</span>
+    <div className="flex flex-col h-full bg-retro-bg">
+      {/* Neo-Retro Header */}
+      <div className="flex items-center justify-between px-4 py-3 bg-white border-b-2 border-black sticky top-0 z-30 shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full border-2 border-black overflow-hidden bg-retro-primary/[0.2] flex items-center justify-center">
+            <span className="text-lg">{currentPersona.emoji}</span>
+          </div>
+          <div>
+              <div className="font-pixel text-xs font-bold text-black">{currentPersona.title}</div>
+              <div className="font-retro text-xs text-green-600 flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                ONLINE
+              </div>
+          </div>
         </div>
-        <div className="flex gap-1">
+        <div>
           <ConnectionStatus isOnline={isOnline} />
         </div>
       </div>
 
       {/* Message List */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 bg-retro-cream">
+      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
         {messages.length === 0 && (
           <div className="text-center py-12">
-            <div className="text-6xl mb-4 animate-pixel-bounce">{currentPersona.emoji}</div>
+            <div className="text-6xl mb-4 animate-pop-in">{currentPersona.emoji}</div>
             <p className="font-pixel text-sm text-gray-900 mb-2">{currentPersona.title}</p>
             <p className="font-retro text-xl text-gray-700">{currentPersona.description}</p>
-            <div className="mt-6 p-4 border-2 border-dashed border-retro-teal bg-retro-teal/10">
+            <div className="mt-8 mx-auto max-w-xs p-4 border-2 border-black bg-white shadow-[4px_4px_0_0_#000] rotate-1 hover:rotate-0 transition-transform">
               <p className="font-retro text-lg text-gray-700 blink-cursor">
                 대화를 시작하려면 메시지를 보내세요
               </p>
@@ -193,15 +202,20 @@ export function ChatContainer() {
 
       {/* Offline Warning */}
       {isOnline === false && (
-        <div className="px-4 py-2 bg-red-100 border-t-2 border-red-400">
-          <p className="font-retro text-sm text-red-700 text-center">
+        <div className="px-4 py-2 bg-retro-error text-white border-t-2 border-black">
+          <p className="font-pixel text-xs text-center">
             서버에 연결할 수 없습니다. 백엔드 서버를 확인해주세요.
           </p>
         </div>
       )}
 
       {/* Chat Input */}
-      <ChatInput onSend={handleSendMessage} disabled={isTyping || isOnline === false} />
+      <ChatInput 
+        onSend={handleSendMessage} 
+        disabled={isTyping || isOnline === false} 
+        isOnline={isOnline !== false} 
+        isTyping={isTyping}
+      />
     </div>
   );
 }

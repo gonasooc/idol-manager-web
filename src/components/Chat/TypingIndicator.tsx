@@ -6,33 +6,31 @@ export function TypingIndicator() {
   const persona = useAtomValue(currentPersonaAtom);
 
   return (
-    <div className="flex items-end gap-3">
+    <div className="flex items-end gap-3 translate-y-2">
       {/* Idol Avatar */}
       <motion.div
-        className="shrink-0 w-10 h-10 bg-win95-medium border-2 border-t-white border-l-white border-b-gray-600 border-r-gray-600 flex items-center justify-center text-xl"
-        animate={{ y: [0, -2, 0] }}
-        transition={{ duration: 1, repeat: Infinity }}
+        className="shrink-0 w-10 h-10 bg-white border-2 border-black rounded-full flex items-center justify-center text-xl shadow-[2px_2px_0_0_rgba(0,0,0,1)]"
+        animate={{ y: [0, -5, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
       >
         {persona.emoji}
       </motion.div>
 
       {/* Typing Bubble */}
-      <div className="retro-bubble retro-bubble-idol">
-        <div className="flex items-center gap-2">
-          <span className="font-pixel text-xs text-gray-600">TYPING</span>
-          <div className="flex gap-1">
+      <div className="retro-bubble retro-bubble-idol py-3 px-4">
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1.5">
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                className="w-2 h-3 bg-gray-600"
+                className="w-2.5 h-2.5 bg-retro-primary rounded-full border border-black"
                 animate={{
-                  opacity: [0.3, 1, 0.3],
-                  scaleY: [0.5, 1, 0.5],
+                  y: [0, -6, 0],
                 }}
                 transition={{
-                  duration: 1,
+                  duration: 0.6,
                   repeat: Infinity,
-                  delay: i * 0.3,
+                  delay: i * 0.2,
                 }}
               />
             ))}

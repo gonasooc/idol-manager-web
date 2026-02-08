@@ -8,11 +8,23 @@ function PixelHeart({ filled, color }: { filled: boolean; color: string }) {
     return <span className="pixel-heart-empty" />;
   }
 
+  // Map tier colors to hex for filter
+  const getColorHex = (c: string) => {
+    switch (c) {
+        case 'max': return '#ff0080'; // retro-primary
+        case 'high': return '#00af54'; // retro-success
+        case 'mid': return '#ffc800'; // retro-warning
+        case 'low': return '#ff124f'; // retro-error
+        default: return '#000000';
+    }
+  };
+
   return (
     <span
       className="pixel-heart"
       style={{
-        filter: color === 'max' ? 'drop-shadow(0 0 4px #ff69b4)' : undefined,
+        filter: `drop-shadow(0 0 2px ${getColorHex(color)})`,
+        transform: filled ? 'scale(1.1)' : 'scale(1)',
       }}
     />
   );
@@ -23,17 +35,22 @@ function ContinuousGauge({ value, max = 100 }: { value: number; max?: number }) 
   const percentage = (value / max) * 100;
 
   const getBarColor = () => {
-    if (value >= 90) return 'bg-retro-pink';
-    if (value >= 60) return 'bg-retro-gold';
-    if (value >= 30) return 'bg-retro-orange';
-    return 'bg-retro-red';
+    if (value >= 90) return 'bg-retro-primary';
+    if (value >= 60) return 'bg-retro-success';
+    if (value >= 30) return 'bg-retro-warning';
+    return 'bg-retro-error';
   };
 
   return (
-    <div className="retro-gauge flex-1">
+    <div className="retro-gauge w-full h-6 relative bg-white overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-20" style={{ 
+            backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 50%)',
+            backgroundSize: '4px 4px'
+        }} />
+        
       <motion.div
-        className={`h-4 ${getBarColor()}`}
-        style={{ boxShadow: 'inset 0 -4px 0 rgba(0, 0, 0, 0.3)' }}
+        className={`h-full ${getBarColor()} border-r-2 border-black`}
         initial={{ width: 0 }}
         animate={{ width: `${percentage}%` }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
@@ -47,16 +64,16 @@ export function BondLevelBar() {
 
   // Determine bond level tier
   const getTier = (level: number) => {
-    if (level >= 90) return { label: '최고', color: 'max' };
-    if (level >= 60) return { label: '높음', color: 'high' };
-    if (level >= 30) return { label: '보통', color: 'mid' };
-    return { label: '낮음', color: 'low' };
+    if (level >= 90) return { label: '최고', color: 'max', bg: 'bg-retro-primary text-black' };
+    if (level >= 60) return { label: '높음', color: 'high', bg: 'bg-retro-success text-black' };
+    if (level >= 30) return { label: '보통', color: 'mid', bg: 'bg-retro-warning text-black' };
+    return { label: '낮음', color: 'low', bg: 'bg-retro-error text-black' };
   };
 
   const tier = getTier(bondLevel);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 p-1">
       {/* Header with pixel hearts */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -66,10 +83,11 @@ export function BondLevelBar() {
               <motion.div
                 key={i}
                 animate={{
-                  y: bondLevel >= 90 ? [0, -2, 0] : 0,
+                  y: bondLevel >= 90 ? [0, -4, 0] : 0,
+                  rotate: bondLevel >= 90 ? [0, 10, -10, 0] : 0,
                 }}
                 transition={{
-                  duration: 0.5,
+                  duration: 0.6,
                   repeat: bondLevel >= 90 ? Infinity : 0,
                   delay: i * 0.1,
                 }}
@@ -81,29 +99,21 @@ export function BondLevelBar() {
               </motion.div>
             ))}
           </div>
-          <span className="font-pixel text-xs text-gray-800">친밀도</span>
+          <span className="font-pixel text-xs font-bold">친밀도</span>
         </div>
 
         {/* Value display */}
         <div className="flex items-center gap-2">
           <motion.span
             key={bondLevel}
-            initial={{ scale: 1.3, color: '#ffd700' }}
-            animate={{ scale: 1, color: '#1a1a4e' }}
+            initial={{ scale: 1.5, color: '#ff0080' }}
+            animate={{ scale: 1, color: '#000' }}
             className="font-pixel text-sm"
           >
-            {bondLevel}
+            {bondLevel}%
           </motion.span>
           <span
-            className={`font-pixel text-xs px-2 py-1 ${
-              tier.color === 'max'
-                ? 'bg-pink-600 text-white levelup-glow'
-                : tier.color === 'high'
-                ? 'bg-amber-600 text-white'
-                : tier.color === 'mid'
-                ? 'bg-orange-600 text-white'
-                : 'bg-red-600 text-white'
-            }`}
+            className={`font-pixel text-[10px] px-2 py-0.5 border-2 border-black rounded-md ${tier.bg}`}
           >
             {tier.label}
           </span>
@@ -112,21 +122,6 @@ export function BondLevelBar() {
 
       {/* Continuous Progress Bar */}
       <ContinuousGauge value={bondLevel} />
-
-      {/* Level markers */}
-      <div className="flex justify-between font-retro text-sm text-gray-700 px-1">
-        <span>0</span>
-        <span className={bondLevel >= 30 ? 'text-orange-700 font-bold' : ''}>
-          30
-        </span>
-        <span className={bondLevel >= 60 ? 'text-amber-700 font-bold' : ''}>
-          60
-        </span>
-        <span className={bondLevel >= 90 ? 'text-pink-600 font-bold' : ''}>
-          90
-        </span>
-        <span>100</span>
-      </div>
     </div>
   );
 }

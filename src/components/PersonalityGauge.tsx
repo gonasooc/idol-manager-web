@@ -24,13 +24,12 @@ export function RetroSliderGauge({
 
   // Determine which side the value is on
   const isPositive = value >= 0;
-  const intensity = Math.abs(value);
-
+  
   return (
     <div className="space-y-1">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <span className="font-pixel text-xs text-gray-800">{label}</span>
+        <span className="font-pixel text-xs font-bold text-black border-2 border-black bg-white px-1 shadow-[2px_2px_0_0_rgba(0,0,0,1)]">{label}</span>
         <motion.span
           key={value}
           initial={{ scale: 1.2 }}
@@ -44,68 +43,43 @@ export function RetroSliderGauge({
         </motion.span>
       </div>
 
-      {/* Retro Slider Track */}
-      <div className="relative h-6 bg-black p-1 border-2 border-t-gray-600 border-l-gray-600 border-b-white border-r-white">
-        {/* Track background with segments */}
-        <div className="absolute inset-1 flex">
-          {/* Left side (negative) */}
-          <div className="flex-1 flex gap-px bg-gray-800">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div
-                key={`neg-${i}`}
-                className="flex-1"
-                style={{
-                  backgroundColor:
-                    !isPositive && (4 - i) * 20 < intensity
-                      ? negativeColor.replace('text-', '')
-                      : '#333',
-                  opacity: !isPositive && (4 - i) * 20 < intensity ? 1 : 0.3,
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Center divider */}
-          <div className="w-1 bg-gray-500" />
-
-          {/* Right side (positive) */}
-          <div className="flex-1 flex gap-px bg-gray-800">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div
-                key={`pos-${i}`}
-                className="flex-1"
-                style={{
-                  backgroundColor:
-                    isPositive && i * 20 < intensity
-                      ? positiveColor.replace('text-', '')
-                      : '#333',
-                  opacity: isPositive && i * 20 < intensity ? 1 : 0.3,
-                }}
-              />
-            ))}
-          </div>
-        </div>
+      {/* Neo-Retro Slider Track */}
+      <div className="relative h-8 bg-white border-3 border-black rounded-full overflow-hidden shadow-[2px_2px_0_0_rgba(0,0,0,1)]">
+        {/* Center Indicator */}
+        <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-black/20 z-0" />
+        
+        {/* Fill based on value */}
+        <motion.div 
+            className={`absolute top-0 bottom-0 z-0 ${isPositive ? 'bg-retro-primary/30' : 'bg-retro-blue/30'}`}
+            initial={{ width: '50%' }}
+            animate={{ 
+                left: isPositive ? '50%' : `${displayValue}%`,
+                width: `${Math.abs(value)/2}%`
+            }} 
+        />
 
         {/* Slider thumb */}
         <motion.div
-          className="absolute top-0 bottom-0 w-3 bg-win95-medium border-2 border-t-white border-l-white border-b-gray-600 border-r-gray-600"
+          className="absolute top-1 bottom-1 w-6 bg-retro-warning border-2 border-black rounded-full z-10 flex items-center justify-center"
           style={{
-            left: `calc(${displayValue}% - 6px)`,
+            left: `calc(${displayValue}% - 12px)`,
           }}
           initial={false}
           animate={{
-            left: `calc(${displayValue}% - 6px)`,
+            left: `calc(${displayValue}% - 12px)`,
           }}
-          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        />
+          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+        >
+            <div className="w-2 h-2 bg-white rounded-full border border-black" />
+        </motion.div>
       </div>
 
       {/* Labels */}
-      <div className="flex justify-between font-retro text-sm">
-        <span className={!isPositive && intensity > 50 ? negativeColor + ' font-bold' : 'text-gray-700'}>
+      <div className="flex justify-between font-retro text-sm px-1">
+        <span className={`${!isPositive ? negativeColor + ' font-bold' : 'text-gray-500'}`}>
           {negativeLabel}
         </span>
-        <span className={isPositive && intensity > 50 ? positiveColor + ' font-bold' : 'text-gray-700'}>
+        <span className={`${isPositive ? positiveColor + ' font-bold' : 'text-gray-500'}`}>
           {positiveLabel}
         </span>
       </div>
@@ -117,10 +91,10 @@ export function PersonalityGauge() {
   const personality = useAtomValue(personalityScoreAtom);
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-2">
-        <span className="pixel-star" />
-        <h3 className="font-pixel text-xs text-gray-800">성격</h3>
+    <div className="space-y-4 p-1">
+      <div className="flex items-center gap-2 mb-2">
+        <span className="pixel-star animate-spin-slow" />
+        <h3 className="font-pixel text-xs font-bold">성격</h3>
       </div>
 
       <RetroSliderGauge
@@ -129,7 +103,7 @@ export function PersonalityGauge() {
         negativeLabel="차가움"
         positiveLabel="따뜻함"
         negativeColor="text-retro-blue"
-        positiveColor="text-retro-pink"
+        positiveColor="text-retro-primary"
       />
 
       <RetroSliderGauge
@@ -137,8 +111,8 @@ export function PersonalityGauge() {
         value={personality.confidence}
         negativeLabel="소심함"
         positiveLabel="대담함"
-        negativeColor="text-retro-green"
-        positiveColor="text-retro-orange"
+        negativeColor="text-retro-success"
+        positiveColor="text-retro-warning"
       />
     </div>
   );
